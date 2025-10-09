@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绿色未来 - 可持续发展平台</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/news.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#2e7d32',
+                            light: '#4caf50',
+                            dark: '#1b5e20'
+                        },
+                        secondary: '#8bc34a',
+                        accent: '#ffc107',
+                        light: '#f5f9f5'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light text-gray-800">
+    <div id="app">
+        <!-- 导航栏 -->
+        <header class="bg-white shadow-md sticky top-0 z-50">
+            <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-leaf text-2xl text-primary"></i>
+                    <span class="text-xl font-bold text-primary">绿色未来</span>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <ul class="hidden md:flex space-x-6">
+                    <li v-for="page in pages" :key="page.id">
+                        <a href="#" 
+                           :class="['font-medium transition-colors hover:text-primary', 
+                                   currentPage === page.id ? 'text-primary border-b-2 border-primary' : 'text-gray-700']"
+                           @click.prevent="switchPage(page.id)">
+                            {{ page.title }}
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- 移动端菜单按钮 -->
+                <button @click="toggleMobileMenu" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </nav>
+            
+            <!-- 移动端导航菜单 -->
+            <div v-if="mobileMenuOpen" class="md:hidden bg-white shadow-lg">
+                <ul class="py-2">
+                    <li v-for="page in pages" :key="page.id">
+                        <a href="#" 
+                           :class="['block px-4 py-2 font-medium transition-colors hover:bg-light hover:text-primary', 
+                                   currentPage === page.id ? 'text-primary bg-light' : 'text-gray-700']"
+                           @click.prevent="switchPage(page.id)">
+                            {{ page.title }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- 主要内容区 -->
+        <main class="min-h-screen">
+            <transition name="page" mode="out-in">
+                <!-- 首页 -->
+                <section v-if="currentPage === 'home'" key="home">
+                    <!-- 首页内容保持不变 -->
+                    <div class="container mx-auto px-4 py-8">
+                        <!-- Hero Section -->
+                        <div class="bg-gradient-to-r from-primary to-primary-dark rounded-2xl text-white p-8 md:p-12 mb-12 text-center">
+                            <h1 class="text-3xl md:text-4xl font-bold mb-4">共建可持续的绿色未来</h1>
+                            <p class="text-lg md:text-xl mb-6 max-w-2xl mx-auto">
+                                探索全球可持续发展资讯、绿色科技创新、环保项目案例，共同应对气候变化挑战
+                            </p>
+                            <button class="bg-accent text-gray-800 font-semibold py-3 px-6 rounded-full hover:bg-yellow-500 transition-all transform hover:-translate-y-1 shadow-lg">
+                                了解更多
+                            </button>
+                        </div>
+
+                        <!-- 网站定位与简介 -->
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
+                            网站定位与简介
+                            <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                            <div v-for="card in homeCards" :key="card.id" 
+                                 class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+                                <div class="h-48 bg-cover bg-center" :style="{ backgroundImage: `url(${card.image})` }"></div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-primary mb-2">{{ card.title }}</h3>
+                                    <p class="text-gray-600">{{ card.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 快速入口 -->
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
+                            快速入口
+                            <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
+                        </h2>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div v-for="link in quickLinks" :key="link.id" 
+                                 class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
+                                <div class="flex items-center mb-4">
+                                    <i :class="[link.icon, 'text-primary text-xl mr-3']"></i>
+                                    <h3 class="text-lg font-bold text-primary">{{ link.title }}</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">{{ link.description }}</p>
+                                <button @click="switchPage(link.page)" 
+                                        class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
+                                    进入
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 新闻与趋势 - 增强版 -->
+                <section v-else-if="currentPage === 'news'" key="news">
+                    <div class="container mx-auto px-4 py-8">
+                        <!-- 页面标题 -->
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
+                            新闻与趋势
+                            <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
+                        </h2>
+                        
+                        <!-- 总介绍区域 -->
+                        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-12">
+                            <div class="flex flex-col md:flex-row items-center gap-6">
+                                <div class="md:w-1/3">
+                                    <img src="https://images.unsplash.com/photo-1569163139394-de44cb54d5a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" 
+                                         alt="绿色科技" class="w-full h-64 object-cover rounded-xl">
+                                </div>
+                                <div class="md:w-2/3">
+                                    <h3 class="text-2xl font-bold text-primary mb-4">全球绿色科技发展趋势</h3>
+                                    <p class="text-gray-700 mb-4">
+                                        随着全球气候变化问题日益严峻，绿色科技创新正成为推动可持续发展的关键力量。从可再生能源到碳捕捉技术，从绿色材料到循环经济，全球正在经历一场深刻的绿色转型。
+                                    </p>
+                                    <p class="text-gray-700">
+                                        本栏目汇集全球最新可持续发展资讯和新兴绿色科技动态，为您提供前沿的技术洞察和市场趋势分析，助力把握绿色经济机遇。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 飘窗 - 热点新闻 -->
+                        <div class="floating-window bg-gradient-to-r from-primary-light to-primary text-white rounded-2xl p-6 mb-12 shadow-xl">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-fire text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold">热点聚焦</h3>
+                            </div>
+                            <div class="flex flex-col md:flex-row gap-4">
+                                <div class="flex-1">
+                                    <h4 class="font-semibold mb-2">全球碳市场交易额突破万亿美元</h4>
+                                    <p class="text-sm opacity-90">碳交易市场快速发展，为企业减排提供经济激励</p>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold mb-2">欧盟通过碳边境调节机制</h4>
+                                    <p class="text-sm opacity-90">新政策将影响全球贸易格局，推动绿色制造</p>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold mb-2">中国可再生能源装机容量全球第一</h4>
+                                    <p class="text-sm opacity-90">太阳能、风能发电量持续增长，能源结构优化加速</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 业内跳转导航 -->
+                        <div class="industry-jump-nav bg-white rounded-2xl shadow-lg p-6 mb-8">
+                            <h3 class="text-xl font-bold text-primary mb-4 flex items-center">
+                                <i class="fas fa-external-link-alt mr-3"></i>
+                                业内权威平台直达
+                            </h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <a v-for="platform in industryPlatforms" 
+                                   :key="platform.id"
+                                   :href="platform.url" 
+                                   target="_blank"
+                                   class="industry-platform-card bg-light rounded-xl p-4 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                                    <div class="platform-icon mb-3">
+                                        <i :class="[platform.icon, 'text-2xl text-primary']"></i>
+                                    </div>
+                                    <h4 class="font-semibold text-primary mb-2">{{ platform.name }}</h4>
+                                    <p class="text-xs text-gray-600">{{ platform.description }}</p>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 新闻筛选 -->
+                        <div class="flex flex-wrap justify-center gap-2 mb-8">
+                            <button v-for="filter in newsFilters" 
+                                    :key="filter" 
+                                    :class="['px-4 py-2 rounded-full border transition-colors', 
+                                            currentFilter === filter ? 
+                                            'bg-primary text-white border-primary' : 
+                                            'bg-white text-primary border-primary hover:bg-primary hover:text-white']"
+                                    @click="setFilter(filter)">
+                                {{ filter }}
+                            </button>
+                        </div>
+
+                        <!-- 分板块展示 -->
+                        <div class="space-y-12">
+                            <!-- 新兴绿色科技板块 -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-primary mb-6 flex items-center">
+                                    <i class="fas fa-seedling mr-3"></i>
+                                    新兴绿色科技
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <div v-for="tech in greenTech" :key="tech.id" 
+                                         class="news-card bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300">
+                                        <div class="h-48 bg-cover bg-center relative">
+                                            <img :src="tech.image" :alt="tech.title" class="w-full h-full object-cover">
+                                            <div class="absolute top-4 right-4 bg-primary text-white text-xs px-2 py-1 rounded-full">
+                                                {{ tech.category }}
+                                            </div>
+                                        </div>
+                                        <div class="p-6">
+                                            <div class="flex justify-between items-start mb-2">
+                                                <h4 class="text-lg font-bold text-primary">{{ tech.title }}</h4>
+                                            </div>
+                                            <p class="text-gray-600 text-sm mb-4">{{ tech.description }}</p>
+                                            <div class="flex justify-between text-xs text-gray-500">
+                                                <span><i class="far fa-calendar mr-1"></i> {{ tech.date }}</span>
+                                                <span><i class="far fa-eye mr-1"></i> {{ tech.views }}</span>
+                                            </div>
+                                            <!-- 外部链接按钮 -->
+                                            <div class="mt-4 flex justify-between items-center">
+                                                <button @click="openExternalLink(tech.externalUrl)" 
+                                                        class="external-link-btn flex items-center text-primary hover:text-primary-dark transition-colors">
+                                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                                    阅读原文
+                                                </button>
+                                                <button @click="shareArticle(tech)" 
+                                                        class="share-btn flex items-center text-gray-500 hover:text-primary transition-colors">
+                                                    <i class="fas fa-share-alt mr-2"></i>
+                                                    分享
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 全球可持续发展资讯 -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-primary mb-6 flex items-center">
+                                    <i class="fas fa-globe-americas mr-3"></i>
+                                    全球可持续发展资讯
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div v-for="article in globalNews" :key="article.id" 
+                                         class="news-card bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300">
+                                        <div class="h-48 bg-cover bg-center">
+                                            <img :src="article.image" :alt="article.title" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="p-6">
+                                            <h4 class="text-lg font-bold text-primary mb-2">{{ article.title }}</h4>
+                                            <p class="text-gray-600 mb-4">{{ article.summary }}</p>
+                                            <div class="flex justify-between text-sm text-gray-500 mb-4">
+                                                <span><i class="far fa-calendar mr-1"></i> {{ article.date }}</span>
+                                                <span><i class="far fa-eye mr-1"></i> {{ article.views }}</span>
+                                            </div>
+                                            <!-- 外部链接按钮 -->
+                                            <div class="flex justify-between items-center">
+                                                <button @click="openExternalLink(article.externalUrl)" 
+                                                        class="external-link-btn flex items-center text-primary hover:text-primary-dark transition-colors">
+                                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                                    阅读原文
+                                                </button>
+                                                <button @click="shareArticle(article)" 
+                                                        class="share-btn flex items-center text-gray-500 hover:text-primary transition-colors">
+                                                    <i class="fas fa-share-alt mr-2"></i>
+                                                    分享
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 本地动态 -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-primary mb-6 flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-3"></i>
+                                    本地动态
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div v-for="local in localNews" :key="local.id" 
+                                         class="news-card bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300">
+                                        <div class="h-48 bg-cover bg-center">
+                                            <img :src="local.image" :alt="local.title" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="p-6">
+                                            <h4 class="text-lg font-bold text-primary mb-2">{{ local.title }}</h4>
+                                            <p class="text-gray-600 mb-4">{{ local.summary }}</p>
+                                            <div class="flex justify-between text-sm text-gray-500 mb-4">
+                                                <span><i class="far fa-calendar mr-1"></i> {{ local.date }}</span>
+                                                <span><i class="far fa-eye mr-1"></i> {{ local.views }}</span>
+                                            </div>
+                                            <!-- 外部链接按钮 -->
+                                            <div class="flex justify-between items-center">
+                                                <button @click="openExternalLink(local.externalUrl)" 
+                                                        class="external-link-btn flex items-center text-primary hover:text-primary-dark transition-colors">
+                                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                                    阅读原文
+                                                </button>
+                                                <button @click="shareArticle(local)" 
+                                                        class="share-btn flex items-center text-gray-500 hover:text-primary transition-colors">
+                                                    <i class="fas fa-share-alt mr-2"></i>
+                                                    分享
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 其他页面保持不变 -->
+                <!-- 绿色科技知识库 -->
+                <section v-else-if="currentPage === 'knowledge'" key="knowledge">
+                    <!-- 知识库内容 -->
+                    <div class="container mx-auto px-4 py-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
+                            绿色科技知识库
+                            <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
+                        </h2>
+                        
+                        <!-- 知识卡片 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                            <div v-for="item in knowledgeItems" :key="item.id" 
+                                 class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
+                                <h3 class="text-xl font-bold text-primary mb-3">{{ item.title }}</h3>
+                                <p class="text-gray-600 mb-4">{{ item.description }}</p>
+                                <button class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
+                                    了解更多
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 知识测试 -->
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
+                            知识测试
+                            <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
+                        </h2>
+
+                        <div v-for="(quiz, index) in quizzes" :key="index" 
+                             class="bg-white rounded-xl shadow-md p-6 mb-6">
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold text-primary">{{ quiz.question }}</h3>
+                            </div>
+                            <div class="grid gap-3 mb-4">
+                                <div v-for="(option, optIndex) in quiz.options" 
+                                     :key="optIndex"
+                                     :class="['p-3 rounded-lg cursor-pointer transition-colors', 
+                                             selectedAnswers[index] === optIndex ? 
+                                             'bg-primary text-white' : 
+                                             'bg-gray-100 hover:bg-gray-200']"
+                                     @click="selectAnswer(index, optIndex)">
+                                    {{ option }}
+                                </div>
+                            </div>
+                            <button @click="submitAnswer(index)" 
+                                    class="bg-accent text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors w-full">
+                                提交答案
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 项目与案例 -->
+                <section v-else-if="currentPage === 'projects'" key="projects">
+                    <!-- 项目内容 -->
+                    <div class="container mx-auto px-4 py-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
+                            项目与案例
+                            <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div v-for="project in projects" :key="project.id" 
+                                 class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+                                <div class="h-48 bg-cover bg-center" :style="{ backgroundImage: `url(${project.image})` }"></div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-primary mb-2">{{ project.title }}</h3>
+                                    <p class="text-gray-600 mb-4">{{ project.description }}</p>
+                                    <div class="flex justify-between text-sm text-gray-500 mb-4">
+                                        <span><i class="fas fa-map-marker-alt mr-1"></i> {{ project.location }}</span>
+                                        <span><i class="fas fa-calendar-alt mr-1"></i> {{ project.duration }}</span>
+                                    </div>
+                                    <button class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
+                                        查看详情
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 数据与可视化 -->
+                <section v-else-if="currentPage === 'data'" key="data">
+                    <!-- 数据可视化内容 -->
+                    <div class="container mx-auto px-4 py-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
+                            数据与可视化
+                            <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
+                        </h2>
+                        
+                        <!-- 图表区域 -->
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-xl font-bold text-primary mb-4">可再生能源利用率趋势</h3>
+                                <div class="bg-white rounded-xl shadow-md p-8 h-80 flex items-center justify-center">
+                                    <div class="text-center text-gray-500">
+                                        <i class="fas fa-chart-line text-5xl mb-4"></i>
+                                        <p>可再生能源利用率趋势图表将在这里显示</p>
+                                        <p class="text-sm">包含太阳能、风能、水能等可再生能源在全球的使用趋势</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-xl font-bold text-primary mb-4">城市绿色指数排名</h3>
+                                <div class="bg-white rounded-xl shadow-md p-8 h-80 flex items-center justify-center">
+                                    <div class="text-center text-gray-500">
+                                        <i class="fas fa-chart-bar text-5xl mb-4"></i>
+                                        <p>城市绿色指数排名图表将在这里显示</p>
+                                        <p class="text-sm">展示全球主要城市在可持续发展方面的表现排名</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-xl font-bold text-primary mb-4">全球可持续发展地图</h3>
+                                <div class="bg-white rounded-xl shadow-md p-8 h-96 flex items-center justify-center">
+                                    <div class="text-center text-gray-500">
+                                        <i class="fas fa-map-marked-alt text-5xl mb-4"></i>
+                                        <p>可交互的全球可持续发展地图将在这里显示</p>
+                                        <p class="text-sm">展示各国在可持续发展目标方面的进展和挑战</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 数据表格 -->
+                        <h3 class="text-xl font-bold text-primary mb-4 mt-12">碳排放数据表</h3>
+                        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="bg-primary text-white">
+                                        <th class="py-3 px-4 text-left">国家/地区</th>
+                                        <th class="py-3 px-4 text-left">年度碳排放(百万吨)</th>
+                                        <th class="py-3 px-4 text-left">人均碳排放(吨)</th>
+                                        <th class="py-3 px-4 text-left">可再生能源占比</th>
+                                        <th class="py-3 px-4 text-left">碳中和目标年份</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(country, index) in carbonData" :key="country.name" 
+                                        :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+                                        class="hover:bg-gray-100 transition-colors">
+                                        <td class="py-3 px-4">{{ country.name }}</td>
+                                        <td class="py-3 px-4">{{ country.emissions }}</td>
+                                        <td class="py-3 px-4">{{ country.perCapita }}</td>
+                                        <td class="py-3 px-4">{{ country.renewable }}</td>
+                                        <td class="py-3 px-4">{{ country.target }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 关于我们 -->
+                <section v-else-if="currentPage === 'about'" key="about">
+                    <!-- 关于我们内容 -->
+                    <div class="container mx-auto px-4 py-8">
+                        <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
+                            关于我们
+                            <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
+                        </h2>
+                        
+                        <!-- 使命与愿景 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                            <h3 class="text-2xl font-bold text-primary mb-4">我们的使命与愿景</h3>
+                            <p class="text-gray-600 mb-4">
+                                绿色未来平台成立于2020年，致力于推动可持续发展理念的普及和绿色科技的创新应用。我们相信，通过知识传播、技术交流和项目合作，可以加速全球向低碳、循环经济的转型。
+                            </p>
+                            <p class="text-gray-600">
+                                我们的愿景是创建一个人与自然和谐共生的未来，让可持续发展成为每个人的生活方式，让绿色科技惠及全球每个角落。
+                            </p>
+                        </div>
+
+                        <!-- 团队与合作伙伴 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                            <div class="bg-white rounded-xl shadow-md p-6">
+                                <div class="flex items-center mb-4">
+                                    <i class="fas fa-users text-primary text-xl mr-3"></i>
+                                    <h3 class="text-xl font-bold text-primary">团队介绍</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">我们的团队由环境科学家、技术专家、政策分析师和传播专家组成，拥有跨学科背景和丰富的实践经验。</p>
+                                <ul class="space-y-2">
+                                    <li v-for="member in teamMembers" :key="member" class="flex items-center">
+                                        <i class="fas fa-check text-primary mr-2"></i>
+                                        <span>{{ member }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl shadow-md p-6">
+                                <div class="flex items-center mb-4">
+                                    <i class="fas fa-handshake text-primary text-xl mr-3"></i>
+                                    <h3 class="text-xl font-bold text-primary">合作伙伴</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">我们与全球多家机构建立了合作关系，共同推动可持续发展目标的实现。</p>
+                                <ul class="space-y-2">
+                                    <li v-for="partner in partners" :key="partner" class="flex items-center">
+                                        <i class="fas fa-check text-primary mr-2"></i>
+                                        <span>{{ partner }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- 联系表单 -->
+                        <div class="bg-white rounded-xl shadow-md p-6 max-w-2xl mx-auto">
+                            <h3 class="text-2xl font-bold text-center text-primary mb-6">联系我们</h3>
+                            <form @submit.prevent="submitContactForm">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label class="block text-gray-700 mb-2" for="name">姓名</label>
+                                        <input type="text" id="name" v-model="contactForm.name" 
+                                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 mb-2" for="email">邮箱</label>
+                                        <input type="email" id="email" v-model="contactForm.email" 
+                                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 mb-2" for="subject">主题</label>
+                                    <input type="text" id="subject" v-model="contactForm.subject" 
+                                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                                </div>
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 mb-2" for="message">留言</label>
+                                    <textarea id="message" v-model="contactForm.message" rows="4"
+                                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
+                                </div>
+                                <button type="submit" 
+                                        class="bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary-dark transition-colors w-full">
+                                    发送消息
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </transition>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="bg-primary-dark text-white pt-12 pb-6">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 relative pb-2">
+                            关于我们
+                            <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+                        </h3>
+                        <p class="text-gray-300 mb-4">
+                            绿色未来是一个致力于推广可持续发展理念和绿色科技创新的平台。我们通过提供最新资讯、知识科普和案例分析，帮助公众、企业和政府更好地理解和参与环保行动。
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                                <i class="fab fa-weibo"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                                <i class="fab fa-weixin"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 relative pb-2">
+                            快速链接
+                            <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+                        </h3>
+                        <ul class="space-y-2">
+                            <li v-for="page in pages" :key="page.id">
+                                <a href="#" @click.prevent="switchPage(page.id)" 
+                                   class="text-gray-300 hover:text-accent transition-colors">
+                                    {{ page.title }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 relative pb-2">
+                            联系我们
+                            <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+                        </h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center">
+                                <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
+                                <span>北京市朝阳区绿色科技园区</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone mr-3 text-accent"></i>
+                                <span>400-123-4567</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope mr-3 text-accent"></i>
+                                <span>contact@greenfuture.org</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock mr-3 text-accent"></i>
+                                <span>周一至周五 9:00-18:00</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="pt-6 border-t border-gray-700 text-center text-gray-400">
+                    <p>&copy; 2023 绿色未来 - 可持续发展平台. 保留所有权利.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/news.js"></script>
+</body>
+</html>

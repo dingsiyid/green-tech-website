@@ -1,0 +1,58 @@
+/* 全局样式 */
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.3s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+.page-enter-active, .page-leave-active {
+    transition: all 0.3s;
+}
+.page-enter, .page-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
+}
+.floating-window {
+    animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #4caf50;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #2e7d32;
+}
+
+/* 响应式设计增强 */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* 加载动画 */
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4caf50;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
