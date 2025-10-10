@@ -1,255 +1,464 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>绿色未来 - 可持续发展平台</title>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoGreen Hub - Sustainable Development Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            DEFAULT: '#2e7d32',
-                            light: '#4caf50',
-                            dark: '#1b5e20'
-                        },
-                        secondary: '#8bc34a',
-                        accent: '#ffc107',
-                        light: '#f5f9f5'
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#2e7d32",
+                light: "#4caf50",
+                dark: "#1b5e20",
+              },
+              secondary: "#8bc34a",
+              accent: "#ffc107",
+              light: "#f5f9f5",
+            },
+          },
+        },
+      };
     </script>
     <style>
-        .page-transition {
-            animation: fadeIn 0.5s ease-in;
+      .page-transition {
+        animation: fadeIn 0.5s ease-in;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
     </style>
-</head>
-<body class="bg-light text-gray-800">
-    <!-- 导航栏 -->
+  </head>
+  <body class="bg-light text-gray-800">
+    <!-- Navigation Bar -->
     <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-leaf text-2xl text-primary"></i>
-                <span class="text-xl font-bold text-primary">绿色未来</span>
-            </div>
-            
-            <!-- 桌面导航 -->
-            <ul class="hidden md:flex space-x-6">
-                <li><a href="index.html" class="font-medium transition-colors text-primary border-b-2 border-primary">首页</a></li>
-                <li><a href="news.html" class="font-medium transition-colors text-gray-700 hover:text-primary">新闻与趋势</a></li>
-                <li><a href="knowledge.html" class="font-medium transition-colors text-gray-700 hover:text-primary">绿色科技知识库</a></li>
-                <li><a href="projects.html" class="font-medium transition-colors text-gray-700 hover:text-primary">项目与案例</a></li>
-                <li><a href="data.html" class="font-medium transition-colors text-gray-700 hover:text-primary">数据与可视化</a></li>
-                <li><a href="#footer" class="font-medium transition-colors text-gray-700 hover:text-primary">关于我们</a></li>
-            </ul>
-            
-            <!-- 移动端菜单按钮 -->
-            <button onclick="toggleMenu()" class="md:hidden text-gray-700">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </nav>
-        
-        <!-- 移动端导航菜单 -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
-            <ul class="py-2">
-                <li><a href="index.html" class="block px-4 py-2 font-medium text-primary bg-light">首页</a></li>
-                <li><a href="news.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">新闻与趋势</a></li>
-                <li><a href="knowledge.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">绿色科技知识库</a></li>
-                <li><a href="projects.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">项目与案例</a></li>
-                <li><a href="data.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">数据与可视化</a></li>
-                <li><a href="#footer" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">关于我们</a></li>
-            </ul>
+      <nav
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-leaf text-2xl text-primary"></i>
+          <span class="text-xl font-bold text-primary">GoGreen Hub</span>
         </div>
+
+        <!-- Desktop Navigation -->
+        <ul class="hidden md:flex space-x-6">
+          <li>
+            <a
+              href="index.html"
+              class="font-medium transition-colors text-primary border-b-2 border-primary"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="news.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >News</a
+            >
+          </li>
+          <li>
+            <a
+              href="knowledge.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >Knowledge Base</a
+            >
+          </li>
+          <li>
+            <a
+              href="projects.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >Cases</a
+            >
+          </li>
+          <li>
+            <a
+              href="data.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >Data</a
+            >
+          </li>
+          <li>
+            <a
+              href="#footer"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >About Us</a
+            >
+          </li>
+        </ul>
+
+        <!-- Mobile Navigation -->
+
+        <!-- mobile menu button -->
+        <button onclick="toggleMenu()" class="md:hidden text-gray-700">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </nav>
+
+      <!-- mobile navigation menu -->
+      <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
+        <ul class="py-2">
+          <li>
+            <a
+              href="index.html"
+              class="block px-4 py-2 font-medium text-primary bg-light"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="news.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >News & Trends</a
+            >
+          </li>
+          <li>
+            <a
+              href="knowledge.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >Green Technology Knowledge Base</a
+            >
+          </li>
+          <li>
+            <a
+              href="projects.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >Projects & Case Studies</a
+            >
+          </li>
+          <li>
+            <a
+              href="data.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >Data & Visualization</a
+            >
+          </li>
+          <li>
+            <a
+              href="#footer"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >About Us</a
+            >
+          </li>
+        </ul>
+      </div>
     </header>
-
-    <!-- 主要内容区 -->
+    <!-- Main Content Area -->
     <main class="min-h-screen page-transition">
-        <div class="container mx-auto px-4 py-8">
-            <!-- Hero Section -->
-            <div class="bg-gradient-to-r from-primary to-primary-dark rounded-2xl text-white p-8 md:p-12 mb-12 text-center">
-                <h1 class="text-3xl md:text-4xl font-bold mb-4">共建可持续的绿色未来</h1>
-                <p class="text-lg md:text-xl mb-6 max-w-2xl mx-auto">
-                    探索全球可持续发展资讯、绿色科技创新、环保项目案例，共同应对气候变化挑战
-                </p>
-                <button onclick="scrollToQuickLinks()" class="bg-accent text-gray-800 font-semibold py-3 px-6 rounded-full hover:bg-yellow-500 transition-all transform hover:-translate-y-1 shadow-lg">
-                    了解更多
-                </button>
-            </div>
-
-            <!-- 网站定位与简介 -->
-            <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
-                网站定位与简介
-                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">全球视野</h3>
-                        <p class="text-gray-600">汇集全球可持续发展前沿资讯，追踪国际绿色科技动态，为您提供最新的环保趋势和政策分析。</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">知识科普</h3>
-                        <p class="text-gray-600">系统化的绿色科技知识库，从基础概念到前沿技术，帮助公众深入理解可持续发展。</p>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">实践案例</h3>
-                        <p class="text-gray-600">展示全球优秀环保项目和创新实践，为企业和政府提供可借鉴的成功经验。</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 快速入口 -->
-            <h2 id="quickLinks" class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
-                快速入口
-                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-newspaper text-primary text-xl mr-3"></i>
-                        <h3 class="text-lg font-bold text-primary">新闻与趋势</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">获取最新可持续发展资讯和绿色科技动态</p>
-                    <a href="news.html" class="block bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors text-center">
-                        进入
-                    </a>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-book text-primary text-xl mr-3"></i>
-                        <h3 class="text-lg font-bold text-primary">知识库</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">系统学习绿色科技和环保知识</p>
-                    <a href="knowledge.html" class="block bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors text-center">
-                        进入
-                    </a>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-project-diagram text-primary text-xl mr-3"></i>
-                        <h3 class="text-lg font-bold text-primary">项目案例</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">探索全球环保项目和创新实践</p>
-                    <a href="projects.html" class="block bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors text-center">
-                        进入
-                    </a>
-                </div>
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-chart-line text-primary text-xl mr-3"></i>
-                        <h3 class="text-lg font-bold text-primary">数据可视化</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">直观了解全球可持续发展数据</p>
-                    <a href="data.html" class="block bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors text-center">
-                        进入
-                    </a>
-                </div>
-            </div>
+      <div class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div
+          class="bg-gradient-to-r from-primary to-primary-dark rounded-2xl text-white p-8 md:p-12 mb-12 text-center"
+        >
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">
+            Building a Sustainable Green Future Together
+          </h1>
+          <p class="text-lg md:text-xl mb-6 max-w-2xl mx-auto">
+            Explore global sustainable development insights, green technology
+            innovations, and environmental project cases to collectively address
+            climate change challenges
+          </p>
+          <button
+            onclick="scrollToQuickLinks()"
+            class="bg-accent text-gray-800 font-semibold py-3 px-6 rounded-full hover:bg-yellow-500 transition-all transform hover:-translate-y-1 shadow-lg"
+          >
+            Learn More
+          </button>
         </div>
+
+        <!-- Website Overview -->
+        <h2
+          class="text-2xl md:text-3xl font-bold text-center text-primary mb-12"
+        >
+          Website Overview
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div
+            class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div
+              class="h-48 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-primary mb-2">
+                Global Perspective
+              </h3>
+              <p class="text-gray-600">
+                Aggregating cutting-edge sustainable development information
+                from around the world, tracking international green technology
+                trends, and providing the latest environmental trends and policy
+                analysis.
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div
+              class="h-48 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-primary mb-2">
+                Knowledge Education
+              </h3>
+              <p class="text-gray-600">
+                A systematic green technology knowledge base, from basic
+                concepts to cutting-edge technologies, helping the public gain a
+                deep understanding of sustainable development.
+              </p>
+            </div>
+          </div>
+          <div
+            class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2"
+          >
+            <div
+              class="h-48 bg-cover bg-center"
+              style="
+                background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80');
+              "
+            ></div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-primary mb-2">
+                Practical Cases
+              </h3>
+              <p class="text-gray-600">
+                Showcasing excellent global environmental projects and
+                innovative practices, providing businesses and governments with
+                successful experiences to learn from.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Access -->
+        <h2
+          id="quickLinks"
+          class="text-2xl md:text-3xl font-bold text-center text-primary mb-12"
+        >
+          Quick Access
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg flex flex-col"
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-newspaper text-primary text-xl mr-3"></i>
+              <h3 class="text-lg font-bold text-primary">News</h3>
+            </div>
+            <p class="text-gray-600 mb-4 flex-grow">
+              Get the latest sustainable development news and green technology
+              trends
+            </p>
+            <a
+              href="news.html"
+              class="block bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors text-center"
+            >
+              Enter
+            </a>
+          </div>
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg flex flex-col"
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-book text-primary text-xl mr-3"></i>
+              <h3 class="text-lg font-bold text-primary">Knowledge Base</h3>
+            </div>
+            <p class="text-gray-600 mb-4 flex-grow">
+              Systematically learn green technology and environmental knowledge
+            </p>
+            <a
+              href="knowledge.html"
+              class="block bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors text-center"
+            >
+              Enter
+            </a>
+          </div>
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg flex flex-col"
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-project-diagram text-primary text-xl mr-3"></i>
+              <h3 class="text-lg font-bold text-primary">Cases</h3>
+            </div>
+            <p class="text-gray-600 mb-4 flex-grow">
+              Explore global environmental projects and innovative practices
+            </p>
+            <a
+              href="projects.html"
+              class="block bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors text-center"
+            >
+              Enter
+            </a>
+          </div>
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg flex flex-col"
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-chart-line text-primary text-xl mr-3"></i>
+              <h3 class="text-lg font-bold text-primary">Data</h3>
+            </div>
+            <p class="text-gray-600 mb-4 flex-grow">
+              Intuitively understand global sustainable development data
+            </p>
+            <a
+              href="data.html"
+              class="block bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors text-center"
+            >
+              Enter
+            </a>
+          </div>
+        </div>
+      </div>
     </main>
 
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer id="footer" class="bg-primary-dark text-white pt-12 pb-6 mt-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        关于我们
-                        <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
-                    </h3>
-                    <p class="text-gray-300 mb-4">
-                        绿色未来是一个致力于推广可持续发展理念和绿色科技创新的平台。我们通过提供最新资讯、知识科普和案例分析，帮助公众、企业和政府更好地理解和参与环保行动。
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-weibo"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-weixin"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        快速链接
-                        <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
-                    </h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-accent transition-colors">首页</a></li>
-                        <li><a href="news.html" class="text-gray-300 hover:text-accent transition-colors">新闻与趋势</a></li>
-                        <li><a href="knowledge.html" class="text-gray-300 hover:text-accent transition-colors">绿色科技知识库</a></li>
-                        <li><a href="projects.html" class="text-gray-300 hover:text-accent transition-colors">项目与案例</a></li>
-                        <li><a href="data.html" class="text-gray-300 hover:text-accent transition-colors">数据与可视化</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        联系我们
-                        <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
-                    </h3>
-                    <ul class="space-y-3 text-gray-300">
-                        <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
-                            <span>北京市朝阳区绿色科技园区</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone mr-3 text-accent"></i>
-                            <span>400-123-4567</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-3 text-accent"></i>
-                            <span>contact@greenfuture.org</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-clock mr-3 text-accent"></i>
-                            <span>周一至周五 9:00-18:00</span>
-                        </li>
-                    </ul>
-                </div>
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4 relative pb-2">
+              About Us
+              <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+            </h3>
+            <p class="text-gray-300 mb-4">
+              GoGreen Hub is a platform dedicated to promoting the concepts of
+              sustainable development and green technology innovation. We help
+              the public, businesses, and governments better understand and
+              participate in environmental action by providing the latest news,
+              scientific knowledge, and case studies.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href=" "
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-weibo"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-weixin"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a>
             </div>
-            
-            <div class="pt-6 border-t border-gray-700 text-center text-gray-400">
-                <p>&copy; 2023 绿色未来 - 可持续发展平台. 保留所有权利.</p>
-            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-4 relative pb-2">
+              Quick Links
+              <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+            </h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="index.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="news.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >News & Trends</a
+                >
+              </li>
+              <li>
+                <a
+                  href="knowledge.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Green Technology Knowledge Base</a
+                >
+              </li>
+              <li>
+                <a
+                  href="projects.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Projects & Case Studies</a
+                >
+              </li>
+              <li>
+                <a
+                  href="data.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Data & Visualization</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-4 relative pb-2">
+              Contact Us
+              <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+            </h3>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex items-center">
+                <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
+                <span>Hubei University, Wuhan 430062, China</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-phone mr-3 text-accent"></i>
+                <span>400-123-4567</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-envelope mr-3 text-accent"></i>
+                <span>contact@gogreenhub.org</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-clock mr-3 text-accent"></i>
+                <span>Monday to Friday 9:00-18:00</span>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </footer>
 
     <script>
-        function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
+      function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("hidden");
+      }
 
-        function scrollToQuickLinks() {
-            document.getElementById('quickLinks').scrollIntoView({ behavior: 'smooth' });
-        }
+      function scrollToQuickLinks() {
+        document
+          .getElementById("quickLinks")
+          .scrollIntoView({ behavior: "smooth" });
+      }
     </script>
-</body>
+  </body>
 </html>
