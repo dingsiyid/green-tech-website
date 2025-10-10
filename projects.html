@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目与案例 - 绿色未来</title>
+    <title>Projects & Case Studies - Green Future</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -32,213 +32,420 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        
+        .expandable-content.expanded {
+            max-height: 2000px;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
     </style>
 </head>
 <body class="bg-light text-gray-800">
-    <!-- 导航栏 -->
+    <!-- Navigation Bar -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <i class="fas fa-leaf text-2xl text-primary"></i>
-                <span class="text-xl font-bold text-primary">绿色未来</span>
+                <span class="text-xl font-bold text-primary">Green Future</span>
             </div>
             
-            <!-- 桌面导航 -->
+            <!-- Desktop Navigation -->
             <ul class="hidden md:flex space-x-6">
-                <li><a href="index.html" class="font-medium transition-colors text-gray-700 hover:text-primary">首页</a></li>
-                <li><a href="news.html" class="font-medium transition-colors text-gray-700 hover:text-primary">新闻与趋势</a></li>
-                <li><a href="knowledge.html" class="font-medium transition-colors text-gray-700 hover:text-primary">绿色科技知识库</a></li>
-                <li><a href="projects.html" class="font-medium transition-colors text-primary border-b-2 border-primary">项目与案例</a></li>
-                <li><a href="data.html" class="font-medium transition-colors text-gray-700 hover:text-primary">数据与可视化</a></li>
-                <li><a href="#footer" class="font-medium transition-colors text-gray-700 hover:text-primary">关于我们</a></li>
+                <li><a href="index.html" class="font-medium transition-colors text-gray-700 hover:text-primary">Home</a></li>
+                <li><a href="news.html" class="font-medium transition-colors text-gray-700 hover:text-primary">News & Trends</a></li>
+                <li><a href="knowledge.html" class="font-medium transition-colors text-gray-700 hover:text-primary">Knowledge Base</a></li>
+                <li><a href="projects.html" class="font-medium transition-colors text-primary border-b-2 border-primary">Projects & Cases</a></li>
+                <li><a href="data.html" class="font-medium transition-colors text-gray-700 hover:text-primary">Data & Visualization</a></li>
+                <li><a href="#footer" class="font-medium transition-colors text-gray-700 hover:text-primary">About Us</a></li>
             </ul>
             
-            <!-- 移动端菜单按钮 -->
+            <!-- Mobile Menu Button -->
             <button onclick="toggleMenu()" class="md:hidden text-gray-700">
                 <i class="fas fa-bars text-xl"></i>
             </button>
         </nav>
         
-        <!-- 移动端导航菜单 -->
+        <!-- Mobile Navigation Menu -->
         <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
             <ul class="py-2">
-                <li><a href="index.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">首页</a></li>
-                <li><a href="news.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">新闻与趋势</a></li>
-                <li><a href="knowledge.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">绿色科技知识库</a></li>
-                <li><a href="projects.html" class="block px-4 py-2 font-medium text-primary bg-light">项目与案例</a></li>
-                <li><a href="data.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">数据与可视化</a></li>
-                <li><a href="#footer" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">关于我们</a></li>
+                <li><a href="index.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">Home</a></li>
+                <li><a href="news.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">News & Trends</a></li>
+                <li><a href="knowledge.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">Knowledge Base</a></li>
+                <li><a href="projects.html" class="block px-4 py-2 font-medium text-primary bg-light">Projects & Cases</a></li>
+                <li><a href="data.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">Data & Visualization</a></li>
+                <li><a href="#footer" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">About Us</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- 主要内容区 -->
+    <!-- Main Content Area -->
     <main class="min-h-screen page-transition">
         <div class="container mx-auto px-4 py-8">
             <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
-                项目与案例
+                Projects & Case Studies
                 <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
             </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- 项目1 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
+            <!-- Project Category Navigation -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="px-4 py-2 bg-primary text-white rounded-full transition-colors" onclick="filterProjects('all')">All Projects</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-primary hover:text-white transition-colors" onclick="filterProjects('energy')">Energy Transition</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-primary hover:text-white transition-colors" onclick="filterProjects('city')">Green Cities</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-primary hover:text-white transition-colors" onclick="filterProjects('agriculture')">Eco Agriculture</button>
+                <button class="px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-primary hover:text-white transition-colors" onclick="filterProjects('conservation')">Eco Protection</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 - Germany Energy Transition -->
+                <div class="card-hover bg-white rounded-xl shadow-md overflow-hidden project-card" data-category="energy">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">德国能源转型计划</h3>
-                        <p class="text-gray-600 mb-4">德国通过大规模发展可再生能源，成功将清洁能源占比提升至45%，为全球能源转型树立典范。</p>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-primary">Germany Energy Transition</h3>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Energy</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Germany has successfully increased renewable energy share to 45% through large-scale development, setting a global example for energy transition.</p>
                         <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-map-marker-alt mr-1"></i> 德国</span>
+                            <span><i class="fas fa-map-marker-alt mr-1"></i> Germany</span>
                             <span><i class="fas fa-calendar-alt mr-1"></i> 2010-2023</span>
                         </div>
-                        <button onclick="showProjectDetail('德国能源转型')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                            查看详情
+                        <button onclick="toggleDetails('project1')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full flex items-center justify-center">
+                            <span>View Details</span>
+                            <i class="fas fa-chevron-down ml-2 transition-transform" id="icon1"></i>
                         </button>
+                    </div>
+                    
+                    <!-- Expandable Detailed Content -->
+                    <div id="project1" class="expandable-content">
+                        <div class="p-6 border-t border-gray-200">
+                            <h4 class="font-bold text-lg text-primary mb-3">Project Details</h4>
+                            <p class="text-gray-600 mb-4">
+                                Germany's Energy Transition (Energiewende) is a comprehensive energy policy reform aimed at phasing out nuclear and fossil fuels while transitioning to renewable energy sources.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="bg-green-50 p-3 rounded-lg">
+                                    <div class="text-sm text-green-800 font-semibold">Renewable Energy Share</div>
+                                    <div class="text-xl font-bold text-green-600">45%</div>
+                                </div>
+                                <div class="bg-green-50 p-3 rounded-lg">
+                                    <div class="text-sm text-green-800 font-semibold">Annual Emission Reduction</div>
+                                    <div class="text-xl font-bold text-green-600">120M tons</div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Key Measures:</h5>
+                            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                                <li>Large-scale development of wind and solar power</li>
+                                <li>Establishment of smart grids and energy storage systems</li>
+                                <li>Improvement of building energy efficiency standards</li>
+                                <li>Promotion of electric vehicles and public transport</li>
+                            </ul>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Success Factors:</h5>
+                            <p class="text-gray-600">
+                                Through long-term stable policy support, technological innovation, and market mechanisms, Germany has successfully transformed its energy structure, providing replicable experience for other countries.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 项目2 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+                <!-- Project 2 - Singapore Garden City -->
+                <div class="card-hover bg-white rounded-xl shadow-md overflow-hidden project-card" data-category="city">
                     <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">新加坡花园城市建设</h3>
-                        <p class="text-gray-600 mb-4">通过垂直绿化、屋顶花园和生态廊道建设，新加坡打造出人与自然和谐共生的现代都市。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-map-marker-alt mr-1"></i> 新加坡</span>
-                            <span><i class="fas fa-calendar-alt mr-1"></i> 1965至今</span>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-primary">Singapore Garden City</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Green City</span>
                         </div>
-                        <button onclick="showProjectDetail('新加坡花园城市')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                            查看详情
+                        <p class="text-gray-600 mb-4">Through vertical greening, rooftop gardens, and ecological corridors, Singapore has created a modern city where humans and nature coexist harmoniously.</p>
+                        <div class="flex justify-between text-sm text-gray-500 mb-4">
+                            <span><i class="fas fa-map-marker-alt mr-1"></i> Singapore</span>
+                            <span><i class="fas fa-calendar-alt mr-1"></i> 1965-Present</span>
+                        </div>
+                        <button onclick="toggleDetails('project2')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full flex items-center justify-center">
+                            <span>View Details</span>
+                            <i class="fas fa-chevron-down ml-2 transition-transform" id="icon2"></i>
                         </button>
+                    </div>
+                    
+                    <!-- Expandable Detailed Content -->
+                    <div id="project2" class="expandable-content">
+                        <div class="p-6 border-t border-gray-200">
+                            <h4 class="font-bold text-lg text-primary mb-3">Project Details</h4>
+                            <p class="text-gray-600 mb-4">
+                                Singapore's Garden City initiative began in 1965, aiming to transform Singapore into a "city in a garden" through systematic greening planning to enhance urban environmental quality.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <div class="text-sm text-blue-800 font-semibold">Green Coverage Rate</div>
+                                    <div class="text-xl font-bold text-blue-600">47%</div>
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <div class="text-sm text-blue-800 font-semibold">Number of Parks</div>
+                                    <div class="text-xl font-bold text-blue-600">350+</div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Key Measures:</h5>
+                            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                                <li>Construction of national parks and nature reserves</li>
+                                <li>Promotion of vertical greening and rooftop gardens</li>
+                                <li>Establishment of ecological corridors connecting green spaces</li>
+                                <li>Implementation of strict environmental regulations</li>
+                            </ul>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Success Factors:</h5>
+                            <p class="text-gray-600">
+                                Through long-term planning, strict enforcement, and public participation, Singapore has successfully balanced urban development with ecological protection, becoming a model for sustainable cities worldwide.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 项目3 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+                <!-- Project 3 - Copenhagen Carbon Neutral -->
+                <div class="card-hover bg-white rounded-xl shadow-md overflow-hidden project-card" data-category="city">
                     <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">哥本哈根碳中和城市</h3>
-                        <p class="text-gray-600 mb-4">哥本哈根计划2025年实现碳中和，通过自行车交通、清洁能源和绿色建筑推动城市可持续发展。</p>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-primary">Copenhagen Carbon Neutral City</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Green City</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Copenhagen plans to achieve carbon neutrality by 2025 through bicycle transportation, clean energy, and green buildings to promote urban sustainable development.</p>
                         <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-map-marker-alt mr-1"></i> 丹麦哥本哈根</span>
+                            <span><i class="fas fa-map-marker-alt mr-1"></i> Copenhagen, Denmark</span>
                             <span><i class="fas fa-calendar-alt mr-1"></i> 2009-2025</span>
                         </div>
-                        <button onclick="showProjectDetail('哥本哈根碳中和')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                            查看详情
+                        <button onclick="toggleDetails('project3')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full flex items-center justify-center">
+                            <span>View Details</span>
+                            <i class="fas fa-chevron-down ml-2 transition-transform" id="icon3"></i>
                         </button>
+                    </div>
+                    
+                    <!-- Expandable Detailed Content -->
+                    <div id="project3" class="expandable-content">
+                        <div class="p-6 border-t border-gray-200">
+                            <h4 class="font-bold text-lg text-primary mb-3">Project Details</h4>
+                            <p class="text-gray-600 mb-4">
+                                Copenhagen's Carbon Neutral Plan is one of the world's most ambitious urban climate action plans, aiming to achieve carbon neutrality by 2025 through multi-sectoral collaborative efforts.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <div class="text-sm text-blue-800 font-semibold">Bicycle Commuting Rate</div>
+                                    <div class="text-xl font-bold text-blue-600">45%</div>
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <div class="text-sm text-blue-800 font-semibold">Emission Reduction Achieved</div>
+                                    <div class="text-xl font-bold text-blue-600">65%</div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Key Measures:</h5>
+                            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                                <li>Construction of comprehensive bicycle infrastructure</li>
+                                <li>Development of district heating systems</li>
+                                <li>Promotion of offshore wind and biomass energy</li>
+                                <li>Implementation of green building standards</li>
+                            </ul>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Success Factors:</h5>
+                            <p class="text-gray-600">
+                                By integrating emission reduction measures in transportation, energy, and construction sectors, Copenhagen has created synergistic effects, providing a replicable carbon neutrality pathway for other cities.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 项目4 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+                <!-- Project 4 - China Three-North Shelterbelt -->
+                <div class="card-hover bg-white rounded-xl shadow-md overflow-hidden project-card" data-category="conservation">
                     <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">中国三北防护林工程</h3>
-                        <p class="text-gray-600 mb-4">世界最大的生态工程，通过植树造林有效防治荒漠化，改善区域生态环境。</p>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-primary">China Three-North Shelterbelt</h3>
+                            <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Eco Protection</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">The world's largest ecological project, effectively preventing desertification and improving regional ecological environment through afforestation.</p>
                         <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-map-marker-alt mr-1"></i> 中国北方</span>
+                            <span><i class="fas fa-map-marker-alt mr-1"></i> Northern China</span>
                             <span><i class="fas fa-calendar-alt mr-1"></i> 1978-2050</span>
                         </div>
-                        <button onclick="showProjectDetail('三北防护林')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                            查看详情
+                        <button onclick="toggleDetails('project4')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full flex items-center justify-center">
+                            <span>View Details</span>
+                            <i class="fas fa-chevron-down ml-2 transition-transform" id="icon4"></i>
                         </button>
+                    </div>
+                    
+                    <!-- Expandable Detailed Content -->
+                    <div id="project4" class="expandable-content">
+                        <div class="p-6 border-t border-gray-200">
+                            <h4 class="font-bold text-lg text-primary mb-3">Project Details</h4>
+                            <p class="text-gray-600 mb-4">
+                                The Three-North Shelterbelt Project is a large-scale ecological construction project implemented in northwest, north, and northeast China, aimed at preventing land desertification and improving ecological environment.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="bg-yellow-50 p-3 rounded-lg">
+                                    <div class="text-sm text-yellow-800 font-semibold">Afforestation Area</div>
+                                    <div class="text-xl font-bold text-yellow-600">30M hectares</div>
+                                </div>
+                                <div class="bg-yellow-50 p-3 rounded-lg">
+                                    <div class="text-sm text-yellow-800 font-semibold">Forest Coverage Rate</div>
+                                    <div class="text-xl font-bold text-yellow-600">13.6%</div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Key Measures:</h5>
+                            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                                <li>Large-scale artificial afforestation and aerial seeding</li>
+                                <li>Mountain closure for forest cultivation and grassland protection</li>
+                                <li>Construction of farmland shelterbelt networks</li>
+                                <li>Development of ecological economic forests</li>
+                            </ul>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Success Factors:</h5>
+                            <p class="text-gray-600">
+                                Through long-term persistence, scientific planning, and public participation, the Three-North Shelterbelt Project has effectively curbed desertification expansion and improved regional ecological environment, providing a Chinese solution for global ecological governance.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 项目5 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+                <!-- Project 5 - Japan Circular Economy -->
+                <div class="card-hover bg-white rounded-xl shadow-md overflow-hidden project-card" data-category="city">
                     <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">日本循环经济示范</h3>
-                        <p class="text-gray-600 mb-4">日本通过完善的垃圾分类和资源循环利用体系，实现资源利用率最大化和废弃物最小化。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-map-marker-alt mr-1"></i> 日本</span>
-                            <span><i class="fas fa-calendar-alt mr-1"></i> 2000至今</span>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-primary">Japan Circular Economy Model</h3>
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Green City</span>
                         </div>
-                        <button onclick="showProjectDetail('日本循环经济')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                            查看详情
+                        <p class="text-gray-600 mb-4">Japan achieves maximum resource utilization and waste minimization through comprehensive waste classification and resource recycling systems.</p>
+                        <div class="flex justify-between text-sm text-gray-500 mb-4">
+                            <span><i class="fas fa-map-marker-alt mr-1"></i> Japan</span>
+                            <span><i class="fas fa-calendar-alt mr-1"></i> 2000-Present</span>
+                        </div>
+                        <button onclick="toggleDetails('project5')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full flex items-center justify-center">
+                            <span>View Details</span>
+                            <i class="fas fa-chevron-down ml-2 transition-transform" id="icon5"></i>
                         </button>
+                    </div>
+                    
+                    <!-- Expandable Detailed Content -->
+                    <div id="project5" class="expandable-content">
+                        <div class="p-6 border-t border-gray-200">
+                            <h4 class="font-bold text-lg text-primary mb-3">Project Details</h4>
+                            <p class="text-gray-600 mb-4">
+                                Japan's circular economy model focuses on "reduction, reuse, and recycling," achieving efficient resource circulation through comprehensive legal systems, technological innovation, and public participation.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <div class="text-sm text-blue-800 font-semibold">Resource Recovery Rate</div>
+                                    <div class="text-xl font-bold text-blue-600">85%</div>
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded-lg">
+                                    <div class="text-sm text-blue-800 font-semibold">Waste Incineration Rate</div>
+                                    <div class="text-xl font-bold text-blue-600">80%</div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Key Measures:</h5>
+                            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                                <li>Implementation of strict waste classification systems</li>
+                                <li>Promotion of extended producer responsibility</li>
+                                <li>Development of waste resource utilization technologies</li>
+                                <li>Construction of eco-industrial parks</li>
+                            </ul>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Success Factors:</h5>
+                            <p class="text-gray-600">
+                                Through legislative guarantees, technological innovation, and cultural cultivation, Japan has established an efficient circular economy system, providing a sustainable development model for resource-scarce countries.
+                            </p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 项目6 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
+                <!-- Project 6 - Netherlands Circular Agriculture -->
+                <div class="card-hover bg-white rounded-xl shadow-md overflow-hidden project-card" data-category="agriculture">
                     <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">荷兰循环农业创新</h3>
-                        <p class="text-gray-600 mb-4">荷兰通过精准农业技术和废弃物循环利用，实现农业高产出和低环境影响的完美结合。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-map-marker-alt mr-1"></i> 荷兰</span>
-                            <span><i class="fas fa-calendar-alt mr-1"></i> 2015至今</span>
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-bold text-primary">Netherlands Circular Agriculture</h3>
+                            <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Eco Agriculture</span>
                         </div>
-                        <button onclick="showProjectDetail('荷兰循环农业')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                            查看详情
+                        <p class="text-gray-600 mb-4">Netherlands achieves perfect combination of high agricultural output and low environmental impact through precision farming technology and waste recycling.</p>
+                        <div class="flex justify-between text-sm text-gray-500 mb-4">
+                            <span><i class="fas fa-map-marker-alt mr-1"></i> Netherlands</span>
+                            <span><i class="fas fa-calendar-alt mr-1"></i> 2015-Present</span>
+                        </div>
+                        <button onclick="toggleDetails('project6')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full flex items-center justify-center">
+                            <span>View Details</span>
+                            <i class="fas fa-chevron-down ml-2 transition-transform" id="icon6"></i>
                         </button>
                     </div>
-                </div>
-
-                <!-- 项目7 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">冰岛地热能源开发</h3>
-                        <p class="text-gray-600 mb-4">冰岛充分利用地热资源，实现90%以上能源来自可再生能源，成为清洁能源利用的全球典范。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-map-marker-alt mr-1"></i> 冰岛</span>
-                            <span><i class="fas fa-calendar-alt mr-1"></i> 1970至今</span>
+                    
+                    <!-- Expandable Detailed Content -->
+                    <div id="project6" class="expandable-content">
+                        <div class="p-6 border-t border-gray-200">
+                            <h4 class="font-bold text-lg text-primary mb-3">Project Details</h4>
+                            <p class="text-gray-600 mb-4">
+                                The Netherlands' circular agriculture model focuses on "closed-loop production," achieving coordinated development of agricultural production and environmental protection through technological innovation and system optimization.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="bg-green-50 p-3 rounded-lg">
+                                    <div class="text-sm text-green-800 font-semibold">Pesticide Use Reduction</div>
+                                    <div class="text-xl font-bold text-green-600">60%</div>
+                                </div>
+                                <div class="bg-green-50 p-3 rounded-lg">
+                                    <div class="text-sm text-green-800 font-semibold">Water Use Efficiency</div>
+                                    <div class="text-xl font-bold text-green-600">90%</div>
+                                </div>
+                            </div>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Key Measures:</h5>
+                            <ul class="list-disc pl-5 text-gray-600 mb-4">
+                                <li>Development of precision irrigation and fertilization technologies</li>
+                                <li>Promotion of greenhouse agriculture and vertical farming</li>
+                                <li>Establishment of agricultural waste recycling systems</li>
+                                <li>Implementation of ecological pest control</li>
+                            </ul>
+                            
+                            <h5 class="font-bold text-gray-800 mb-2">Success Factors:</h5>
+                            <p class="text-gray-600">
+                                Through technological innovation, knowledge sharing, and policy support, the Netherlands has successfully achieved a win-win situation of high agricultural yield and environmental protection, providing a demonstration for global sustainable agricultural development.
+                            </p>
                         </div>
-                        <button onclick="showProjectDetail('冰岛地热能源')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                            查看详情
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 项目8 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1569163139394-de44cb54d5a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">巴西亚马逊保护计划</h3>
-                        <p class="text-gray-600 mb-4">通过卫星监测和社区参与，巴西致力于保护亚马逊雨林，维护地球"肺部"的健康。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-map-marker-alt mr-1"></i> 巴西</span>
-                            <span><i class="fas fa-calendar-alt mr-1"></i> 2004至今</span>
-                        </div>
-                        <button onclick="showProjectDetail('亚马逊保护')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                            查看详情
-                        </button>
-                    </div>
-                </div>
-
-                <!-- 项目9 -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:-translate-y-2">
-                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-primary mb-2">瑞典垃圾发电系统</h3>
-                        <p class="text-gray-600 mb-4">瑞典将99%的生活垃圾转化为能源或回收利用，甚至需要从其他国家进口垃圾来维持发电。</p>
-                        <div class="flex justify-between text-sm text-gray-500 mb-4">
-                            <span><i class="fas fa-map-marker-alt mr-1"></i> 瑞典</span>
-                            <span><i class="fas fa-calendar-alt mr-1"></i> 1990至今</span>
-                        </div>
-                        <button onclick="showProjectDetail('瑞典垃圾发电')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                            查看详情
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer id="footer" class="bg-primary-dark text-white pt-12 pb-6 mt-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div>
                     <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        关于我们
+                        About Us
                         <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
                     </h3>
                     <p class="text-gray-300 mb-4">
-                        绿色未来是一个致力于推广可持续发展理念和绿色科技创新的平台。我们通过提供最新资讯、知识科普和案例分析，帮助公众、企业和政府更好地理解和参与环保行动。
+                        Green Future is a platform dedicated to promoting sustainable development concepts and green technology innovation. We help the public, businesses, and governments better understand and participate in environmental actions through the latest information, knowledge dissemination, and case analysis.
                     </p>
                     <div class="flex space-x-4">
                         <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
@@ -258,27 +465,27 @@
                 
                 <div>
                     <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        快速链接
+                        Quick Links
                         <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
                     </h3>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-accent transition-colors">首页</a></li>
-                        <li><a href="news.html" class="text-gray-300 hover:text-accent transition-colors">新闻与趋势</a></li>
-                        <li><a href="knowledge.html" class="text-gray-300 hover:text-accent transition-colors">绿色科技知识库</a></li>
-                        <li><a href="projects.html" class="text-gray-300 hover:text-accent transition-colors">项目与案例</a></li>
-                        <li><a href="data.html" class="text-gray-300 hover:text-accent transition-colors">数据与可视化</a></li>
+                        <li><a href="index.html" class="text-gray-300 hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="news.html" class="text-gray-300 hover:text-accent transition-colors">News & Trends</a></li>
+                        <li><a href="knowledge.html" class="text-gray-300 hover:text-accent transition-colors">Knowledge Base</a></li>
+                        <li><a href="projects.html" class="text-gray-300 hover:text-accent transition-colors">Projects & Cases</a></li>
+                        <li><a href="data.html" class="text-gray-300 hover:text-accent transition-colors">Data & Visualization</a></li>
                     </ul>
                 </div>
                 
                 <div>
                     <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        联系我们
+                        Contact Us
                         <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
                     </h3>
                     <ul class="space-y-3 text-gray-300">
                         <li class="flex items-center">
                             <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
-                            <span>北京市朝阳区绿色科技园区</span>
+                            <span>Green Technology Park, Chaoyang District, Beijing</span>
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-phone mr-3 text-accent"></i>
@@ -290,14 +497,14 @@
                         </li>
                         <li class="flex items-center">
                             <i class="fas fa-clock mr-3 text-accent"></i>
-                            <span>周一至周五 9:00-18:00</span>
+                            <span>Monday-Friday 9:00-18:00</span>
                         </li>
                     </ul>
                 </div>
             </div>
             
             <div class="pt-6 border-t border-gray-700 text-center text-gray-400">
-                <p>&copy; 2023 绿色未来 - 可持续发展平台. 保留所有权利.</p>
+                <p>&copy; 2023 Green Future - Sustainable Development Platform. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -308,8 +515,54 @@
             menu.classList.toggle('hidden');
         }
 
-        function showProjectDetail(projectName) {
-            alert('即将打开 "' + projectName + '" 项目详情页面');
+        function toggleDetails(projectId) {
+            const content = document.getElementById(projectId);
+            const icon = document.getElementById('icon' + projectId.slice(-1));
+            
+            content.classList.toggle('expanded');
+            
+            if (content.classList.contains('expanded')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function filterProjects(category) {
+            const projects = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('button');
+            
+            // Update button states
+            buttons.forEach(button => {
+                if (button.textContent.includes('All Projects') && category === 'all') {
+                    button.classList.remove('bg-gray-200', 'text-gray-700');
+                    button.classList.add('bg-primary', 'text-white');
+                } else if (button.textContent.includes('Energy Transition') && category === 'energy') {
+                    button.classList.remove('bg-gray-200', 'text-gray-700');
+                    button.classList.add('bg-primary', 'text-white');
+                } else if (button.textContent.includes('Green Cities') && category === 'city') {
+                    button.classList.remove('bg-gray-200', 'text-gray-700');
+                    button.classList.add('bg-primary', 'text-white');
+                } else if (button.textContent.includes('Eco Agriculture') && category === 'agriculture') {
+                    button.classList.remove('bg-gray-200', 'text-gray-700');
+                    button.classList.add('bg-primary', 'text-white');
+                } else if (button.textContent.includes('Eco Protection') && category === 'conservation') {
+                    button.classList.remove('bg-gray-200', 'text-gray-700');
+                    button.classList.add('bg-primary', 'text-white');
+                } else {
+                    button.classList.remove('bg-primary', 'text-white');
+                    button.classList.add('bg-gray-200', 'text-gray-700');
+                }
+            });
+            
+            // Filter projects
+            projects.forEach(project => {
+                if (category === 'all' || project.dataset.category === category) {
+                    project.style.display = 'block';
+                } else {
+                    project.style.display = 'none';
+                }
+            });
         }
     </script>
 </body>
