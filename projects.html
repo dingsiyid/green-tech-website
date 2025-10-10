@@ -55,39 +55,112 @@
 <body class="bg-light text-gray-800">
     <!-- Navigation Bar -->
     <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-leaf text-2xl text-primary"></i>
-                <span class="text-xl font-bold text-primary">Green Future</span>
-            </div>
-            
-            <!-- Desktop Navigation -->
-            <ul class="hidden md:flex space-x-6">
-                <li><a href="index.html" class="font-medium transition-colors text-gray-700 hover:text-primary">Home</a></li>
-                <li><a href="news.html" class="font-medium transition-colors text-gray-700 hover:text-primary">News & Trends</a></li>
-                <li><a href="knowledge.html" class="font-medium transition-colors text-gray-700 hover:text-primary">Knowledge Base</a></li>
-                <li><a href="projects.html" class="font-medium transition-colors text-primary border-b-2 border-primary">Projects & Cases</a></li>
-                <li><a href="data.html" class="font-medium transition-colors text-gray-700 hover:text-primary">Data & Visualization</a></li>
-                <li><a href="#footer" class="font-medium transition-colors text-gray-700 hover:text-primary">About Us</a></li>
-            </ul>
-            
-            <!-- Mobile Menu Button -->
-            <button onclick="toggleMenu()" class="md:hidden text-gray-700">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </nav>
-        
-        <!-- Mobile Navigation Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
-            <ul class="py-2">
-                <li><a href="index.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">Home</a></li>
-                <li><a href="news.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">News & Trends</a></li>
-                <li><a href="knowledge.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">Knowledge Base</a></li>
-                <li><a href="projects.html" class="block px-4 py-2 font-medium text-primary bg-light">Projects & Cases</a></li>
-                <li><a href="data.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">Data & Visualization</a></li>
-                <li><a href="#footer" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">About Us</a></li>
-            </ul>
+      <nav
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-leaf text-2xl text-primary"></i>
+          <span class="text-xl font-bold text-primary">GoGreen Hub</span>
         </div>
+
+        <!-- desktop navigation -->
+        <ul class="hidden md:flex space-x-6">
+          <li>
+            <a
+              href=" "
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="news.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >News</a
+            >
+          </li>
+          <li>
+            <a
+              href="knowledge.html"
+              class="font-medium transition-colors text-primary border-b-2 border-primary"
+              >Knowledge Base</a
+            >
+          </li>
+          <li>
+            <a
+              href="projects.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >Cases</a
+            >
+          </li>
+          <li>
+            <a
+              href="data.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >Data</a >
+          </li>
+          <li>
+            <a
+              href="#footer"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >About</a
+            >
+          </li>
+        </ul>
+
+        <!-- mobile menu button -->
+        <button onclick="toggleMenu()" class="md:hidden text-gray-700">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </nav>
+
+      <!-- mobile navigation menu -->
+      <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
+        <ul class="py-2">
+          <li>
+            <a
+              href="index.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="news.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >News & Trends</a
+            >
+          </li>
+          <li>
+            <a
+              href="knowledge.html"
+              class="block px-4 py-2 font-medium text-primary bg-light"
+              >Green Technology Knowledge Base</a
+            >
+          </li>
+          <li>
+            <aw
+              href="projects.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >Projects & Case Studies</a
+            >
+          </li>
+          <li>
+            <a
+              href="data.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >Data & Visualization</a
+            >
+          </li>
+          <li>
+            <a
+              href="#footer"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >About Us</a
+            >
+          </li>
+        </ul>
+      </div>
     </header>
 
     <!-- Main Content Area -->
@@ -437,76 +510,114 @@
 
     <!-- Footer -->
     <footer id="footer" class="bg-primary-dark text-white pt-12 pb-6 mt-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        About Us
-                        <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
-                    </h3>
-                    <p class="text-gray-300 mb-4">
-                        Green Future is a platform dedicated to promoting sustainable development concepts and green technology innovation. We help the public, businesses, and governments better understand and participate in environmental actions through the latest information, knowledge dissemination, and case analysis.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-weibo"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-weixin"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        Quick Links
-                        <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
-                    </h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-accent transition-colors">Home</a></li>
-                        <li><a href="news.html" class="text-gray-300 hover:text-accent transition-colors">News & Trends</a></li>
-                        <li><a href="knowledge.html" class="text-gray-300 hover:text-accent transition-colors">Knowledge Base</a></li>
-                        <li><a href="projects.html" class="text-gray-300 hover:text-accent transition-colors">Projects & Cases</a></li>
-                        <li><a href="data.html" class="text-gray-300 hover:text-accent transition-colors">Data & Visualization</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        Contact Us
-                        <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
-                    </h3>
-                    <ul class="space-y-3 text-gray-300">
-                        <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
-                            <span>Green Technology Park, Chaoyang District, Beijing</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone mr-3 text-accent"></i>
-                            <span>400-123-4567</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-3 text-accent"></i>
-                            <span>contact@greenfuture.org</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-clock mr-3 text-accent"></i>
-                            <span>Monday-Friday 9:00-18:00</span>
-                        </li>
-                    </ul>
-                </div>
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4 relative pb-2">
+              About Us
+              <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+            </h3>
+            <p class="text-gray-300 mb-4">
+              GoGreen Hub is a platform dedicated to promoting the concepts of sustainable development and green technology innovation. We help the public, businesses, and governments better understand and participate in environmental action by providing the latest news, scientific knowledge, and case studies.
+            </p >
+            <div class="flex space-x-4">
+              <a
+                href=" "
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-weibo"></i>
+              </a >
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-weixin"></i>
+              </a >
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-twitter"></i>
+              </a >
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a >
             </div>
-            
-            <div class="pt-6 border-t border-gray-700 text-center text-gray-400">
-                <p>&copy; 2023 Green Future - Sustainable Development Platform. All rights reserved.</p>
-            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-4 relative pb-2">
+              Quick Links
+              <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+            </h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="index.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="news.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >News & Trends</a
+                >
+              </li>
+              <li>
+                <a
+                  href="knowledge.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Green Technology Knowledge Base</a
+                >
+              </li>
+              <li>
+                <a
+                  href="projects.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Projects & Case Studies</a
+                >
+              </li>
+              <li>
+                <a
+                  href="data.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Data & Visualization</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-4 relative pb-2">
+              Contact Us
+              <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+            </h3>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex items-center">
+                <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
+                <span>Hubei University, Wuhan 430074, China</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-phone mr-3 text-accent"></i>
+                <span>400-123-4567</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-envelope mr-3 text-accent"></i>
+                <span>contact@gogreenhub.org</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-clock mr-3 text-accent"></i>
+                <span>Monday to Friday 9:00-18:00</span>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </footer>
 
     <script>
