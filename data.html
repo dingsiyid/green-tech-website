@@ -1,219 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data & Visualization - GoGreen Hub</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            DEFAULT: '#2e7d32',
-                            light: '#4caf50',
-                            dark: '#1b5e20'
-                        },
-                        secondary: '#8bc34a',
-                        accent: '#ffc107',
-                        light: '#f5f9f5'
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#2e7d32",
+                light: "#4caf50",
+                dark: "#1b5e20",
+              },
+              secondary: "#8bc34a",
+              accent: "#ffc107",
+              light: "#f5f9f5",
+            },
+          },
+        },
+      };
     </script>
     <style>
-        .page-transition {
-            animation: fadeIn 0.5s ease-in;
+      .page-transition {
+        animation: fadeIn 0.5s ease-in;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        /* Map styles */
-        .map-container {
-            position: relative;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            height: 70vh;
-            min-height: 500px;
-            background-color: #e5e7eb;
+      }
+
+      /* Map styles */
+      .map-container {
+        position: relative;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        height: 70vh;
+        min-height: 500px;
+        background-color: #e5e7eb;
+      }
+
+      #worldMap {
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      .map-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .map-legend {
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+      }
+
+      .legend-color {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-right: 5px;
+        border-radius: 3px;
+      }
+
+      .data-tooltip {
+        position: absolute;
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        max-width: 200px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .data-tooltip.visible {
+        opacity: 1;
+      }
+
+      .custom-popup .leaflet-popup-content-wrapper {
+        border-radius: 8px;
+        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+      }
+
+      .custom-popup .leaflet-popup-content {
+        margin: 12px 15px;
+        font-size: 14px;
+      }
+
+      .map-error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        text-align: center;
+        padding: 20px;
+        background: #f8f9fa;
+        color: #6c757d;
+      }
+
+      .map-error i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #6c757d;
+      }
+
+      .map-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        text-align: center;
+        padding: 20px;
+        background: #f8f9fa;
+        color: #6c757d;
+      }
+
+      .spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #2e7d32;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
         }
-        
-        #worldMap {
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        
-        .map-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            pointer-events: none;
-            z-index: 2;
-        }
-        
-        .map-legend {
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-        }
-        
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            display: inline-block;
-            margin-right: 5px;
-            border-radius: 3px;
-        }
-        
-        .data-tooltip {
-            position: absolute;
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-            max-width: 200px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .data-tooltip.visible {
-            opacity: 1;
-        }
-        
-        .custom-popup .leaflet-popup-content-wrapper {
-            border-radius: 8px;
-            box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-        }
-        
-        .custom-popup .leaflet-popup-content {
-            margin: 12px 15px;
-            font-size: 14px;
-        }
-        
-        .map-error {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            padding: 20px;
-            background: #f8f9fa;
-            color: #6c757d;
-        }
-        
-        .map-error i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #6c757d;
-        }
-        
-        .map-loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            padding: 20px;
-            background: #f8f9fa;
-            color: #6c757d;
-        }
-        
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #2e7d32;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        
-        .fallback-map {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, #a8d5e5 0%, #74b9d3 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .fallback-continents {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .continent {
-            position: absolute;
-            background-color: #4a9cc5;
-            border-radius: 50%;
-            opacity: 0.7;
-        }
-        
-        .fallback-marker {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            box-shadow: 0 0 0 2px white, 0 0 5px rgba(0,0,0,0.5);
-            transition: all 0.3s ease;
-        }
-        
-        .fallback-marker:hover {
-            transform: translate(-50%, -50%) scale(1.5);
-            z-index: 10;
-        }
-        
-        .map-source-selector {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: white;
-            padding: 8px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            z-index: 1000;
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
+      }
+
+      .fallback-map {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, #a8d5e5 0%, #74b9d3 100%);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .fallback-continents {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      .continent {
+        position: absolute;
+        background-color: #4a9cc5;
+        border-radius: 50%;
+        opacity: 0.7;
+      }
+
+      .fallback-marker {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        box-shadow: 0 0 0 2px white, 0 0 5px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+      }
+
+      .fallback-marker:hover {
+        transform: translate(-50%, -50%) scale(1.5);
+        z-index: 10;
+      }
+
+      .map-source-selector {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: white;
+        padding: 8px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+          0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header class="bg-white shadow-md sticky top-0 z-50">
       <nav
         class="container mx-auto px-4 py-3 flex justify-between items-center"
@@ -257,7 +272,8 @@
             <a
               href="data.html"
               class="font-medium transition-colors text-primary border-b-2 border-primary"
-              >Data</a >
+              >Data</a
+            >
           </li>
           <li>
             <a
@@ -325,231 +341,358 @@
 
     <!-- Main content area -->
     <main class="min-h-screen page-transition">
-        <div id="app">
-            <div class="container mx-auto px-4 py-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-4 relative pb-2">
-                    Global Environmental Data Visualization 2024
-                    <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary"></span>
-                </h2>
-                
-                <!-- Data overview cards -->
-                <section class="mb-12">
-                    <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
-                        <i class="fas fa-globe-americas mr-3"></i>Global Environmental Overview 2024
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div class="bg-white rounded-xl shadow-md p-6 card-hover border-l-4 border-green-500">
-                            <div class="flex items-center mb-4">
-                                <i class="fas fa-industry text-2xl text-green-500 mr-3"></i>
-                                <h3 class="text-lg font-semibold text-gray-700">Global Carbon Emissions</h3>
-                            </div>
-                            <p class="text-3xl font-bold text-gray-800">38.2 Billion Tons</p>
-                            <p class="text-sm text-red-500 mt-2">
-                                <i class="fas fa-arrow-up mr-1"></i>1.8% increase compared to 2023
-                            </p>
+      <div id="app">
+        <div class="container mx-auto px-4 py-8">
+          <h2
+            class="text-2xl md:text-3xl font-bold text-center text-primary mb-4 relative pb-2"
+          >
+            Global Environmental Data Visualization 2024
+            <span
+              class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary"
+            ></span>
+          </h2>
+
+          <!-- Data overview cards -->
+          <section class="mb-12">
+            <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
+              <i class="fas fa-globe-americas mr-3"></i>Global Environmental
+              Overview 2024
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div
+                class="bg-white rounded-xl shadow-md p-6 card-hover border-l-4 border-green-500"
+              >
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-industry text-2xl text-green-500 mr-3"></i>
+                  <h3 class="text-lg font-semibold text-gray-700">
+                    Global Carbon Emissions
+                  </h3>
+                </div>
+                <p class="text-3xl font-bold text-gray-800">
+                  38.2 Billion Tons
+                </p>
+                <p class="text-sm text-red-500 mt-2">
+                  <i class="fas fa-arrow-up mr-1"></i>1.8% increase compared to
+                  2023
+                </p>
+              </div>
+
+              <div
+                class="bg-white rounded-xl shadow-md p-6 card-hover border-l-4 border-primary"
+              >
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-leaf text-2xl text-primary mr-3"></i>
+                  <h3 class="text-lg font-semibold text-gray-700">
+                    Renewable Energy Share
+                  </h3>
+                </div>
+                <p class="text-3xl font-bold text-gray-800">34.2%</p>
+                <p class="text-sm text-green-500 mt-2">
+                  <i class="fas fa-arrow-up mr-1"></i>3.2% increase compared to
+                  2023
+                </p>
+              </div>
+
+              <div
+                class="bg-white rounded-xl shadow-md p-6 card-hover border-l-4 border-secondary"
+              >
+                <div class="flex items-center mb-4">
+                  <i class="fas fa-city text-2xl text-secondary mr-3"></i>
+                  <h3 class="text-lg font-semibold text-gray-700">
+                    Average Green Index
+                  </h3>
+                </div>
+                <p class="text-3xl font-bold text-gray-800">75.8</p>
+                <p class="text-sm text-green-500 mt-2">
+                  <i class="fas fa-arrow-up mr-1"></i>2.1% increase compared to
+                  2023
+                </p>
+              </div>
+            </div>
+
+            <!-- Carbon emissions chart -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+              <h3 class="text-xl font-bold text-primary mb-4">
+                Carbon Emissions by Major Countries (Million Tons) - 2024
+              </h3>
+              <div class="h-80">
+                <canvas id="emissionsChart"></canvas>
+              </div>
+            </div>
+          </section>
+
+          <!-- Renewable energy trends -->
+          <section class="mb-12">
+            <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
+              <i class="fas fa-chart-line mr-3"></i>Renewable Energy Utilization
+              Trends 2024
+            </h3>
+
+            <div class="bg-white rounded-xl shadow-md p-6">
+              <h3 class="text-xl font-bold text-primary mb-4">
+                Global Renewable Energy Generation Share (%) 2018-2024
+              </h3>
+              <div class="h-80">
+                <canvas id="renewableChart"></canvas>
+              </div>
+            </div>
+          </section>
+
+          <!-- City green index ranking -->
+          <section class="mb-12">
+            <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
+              <i class="fas fa-trophy mr-3"></i>City Green Index Ranking 2024
+            </h3>
+
+            <div class="bg-white rounded-xl shadow-md p-6 overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead>
+                  <tr>
+                    <th
+                      class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Rank
+                    </th>
+                    <th
+                      class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      City
+                    </th>
+                    <th
+                      class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Country
+                    </th>
+                    <th
+                      class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Green Index
+                    </th>
+                    <th
+                      class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Carbon Emissions (tons/person)
+                    </th>
+                    <th
+                      class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Renewable Energy Share
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <tr
+                    v-for="(city, index) in cityRankings"
+                    :key="city.name"
+                    class="hover:bg-gray-50"
+                  >
+                    <td class="px-4 py-3 whitespace-nowrap">
+                      <span
+                        class="px-2 py-1 text-xs font-bold rounded-full"
+                        :class="getRankingClass(index+1)"
+                      >
+                        {{ index+1 }}
+                      </span>
+                    </td>
+                    <td
+                      class="px-4 py-3 whitespace-nowrap font-medium text-gray-900"
+                    >
+                      {{ city.name }}
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-gray-700">
+                      {{ city.country }}
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                          <div
+                            class="bg-primary h-2 rounded-full"
+                            :style="{width: city.greenIndex + '%'}"
+                          ></div>
                         </div>
-                        
-                        <div class="bg-white rounded-xl shadow-md p-6 card-hover border-l-4 border-primary">
-                            <div class="flex items-center mb-4">
-                                <i class="fas fa-leaf text-2xl text-primary mr-3"></i>
-                                <h3 class="text-lg font-semibold text-gray-700">Renewable Energy Share</h3>
-                            </div>
-                            <p class="text-3xl font-bold text-gray-800">34.2%</p>
-                            <p class="text-sm text-green-500 mt-2">
-                                <i class="fas fa-arrow-up mr-1"></i>3.2% increase compared to 2023
-                            </p>
+                        <span class="font-medium">{{ city.greenIndex }}</span>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap text-gray-700">
+                      {{ city.emissions }}
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                          <div
+                            class="bg-secondary h-2 rounded-full"
+                            :style="{width: city.renewable + '%'}"
+                          ></div>
                         </div>
-                        
-                        <div class="bg-white rounded-xl shadow-md p-6 card-hover border-l-4 border-secondary">
-                            <div class="flex items-center mb-4">
-                                <i class="fas fa-city text-2xl text-secondary mr-3"></i>
-                                <h3 class="text-lg font-semibold text-gray-700">Average Green Index</h3>
-                            </div>
-                            <p class="text-3xl font-bold text-gray-800">75.8</p>
-                            <p class="text-sm text-green-500 mt-2">
-                                <i class="fas fa-arrow-up mr-1"></i>2.1% increase compared to 2023
-                            </p>
-                        </div>
+                        <span class="font-medium">{{ city.renewable }}%</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Global environmental data interactive map -->
+          <section>
+            <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
+              <i class="fas fa-map mr-3"></i>Global Environmental Data
+              Interactive Map 2024
+            </h3>
+
+            <div class="bg-white rounded-xl shadow-md p-6">
+              <div class="flex flex-wrap gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1"
+                    >Select Data Type</label
+                  >
+                  <select
+                    v-model="selectedDataType"
+                    @change="updateMap"
+                    class="rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                    <option value="emissions">Carbon Emissions</option>
+                    <option value="renewable">Renewable Energy</option>
+                    <option value="greenIndex">Green Index</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="rounded-lg overflow-hidden relative map-container">
+                <!-- Leaflet map container -->
+                <div id="worldMap">
+                  <!-- Loading state -->
+                  <div v-if="mapState === 'loading'" class="map-loading">
+                    <div class="spinner"></div>
+                    <p>Loading map data...</p>
+                  </div>
+
+                  <!-- Error state -->
+                  <div v-else-if="mapState === 'error'" class="map-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3 class="text-xl font-bold mb-2">Map loading failed</h3>
+                    <p class="mb-4">
+                      Unable to load interactive map. Please check your network
+                      connection or try again later.
+                    </p>
+                    <button
+                      @click="initMap"
+                      class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-lg transition duration-200"
+                    >
+                      <i class="fas fa-redo mr-2"></i>Reload Map
+                    </button>
+                  </div>
+
+                  <!-- Fallback map -->
+                  <div v-else-if="mapState === 'fallback'" class="fallback-map">
+                    <div class="fallback-continents">
+                      <div
+                        class="continent"
+                        style="width: 30%; height: 40%; top: 15%; left: 15%"
+                      ></div>
+                      <div
+                        class="continent"
+                        style="width: 25%; height: 35%; top: 20%; left: 60%"
+                      ></div>
+                      <div
+                        class="continent"
+                        style="width: 35%; height: 30%; top: 50%; left: 20%"
+                      ></div>
+                      <div
+                        class="continent"
+                        style="width: 20%; height: 25%; top: 60%; left: 70%"
+                      ></div>
                     </div>
-                    
-                    <!-- Carbon emissions chart -->
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <h3 class="text-xl font-bold text-primary mb-4">Carbon Emissions by Major Countries (Million Tons) - 2024</h3>
-                        <div class="h-80">
-                            <canvas id="emissionsChart"></canvas>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- Renewable energy trends -->
-                <section class="mb-12">
-                    <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
-                        <i class="fas fa-chart-line mr-3"></i>Renewable Energy Utilization Trends 2024
-                    </h3>
-                    
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <h3 class="text-xl font-bold text-primary mb-4">Global Renewable Energy Generation Share (%) 2018-2024</h3>
-                        <div class="h-80">
-                            <canvas id="renewableChart"></canvas>
-                        </div>
-                    </div>
-                </section>
-                
-                <!-- City green index ranking -->
-                <section class="mb-12">
-                    <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
-                        <i class="fas fa-trophy mr-3"></i>City Green Index Ranking 2024
-                    </h3>
-                    
-                    <div class="bg-white rounded-xl shadow-md p-6 overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead>
-                                <tr>
-                                    <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rank</th>
-                                    <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">City</th>
-                                    <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
-                                    <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Green Index</th>
-                                    <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Carbon Emissions (tons/person)</th>
-                                    <th class="px-4 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Renewable Energy Share</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr v-for="(city, index) in cityRankings" :key="city.name" class="hover:bg-gray-50">
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs font-bold rounded-full" 
-                                              :class="getRankingClass(index+1)">
-                                            {{ index+1 }}
-                                        </span>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900">{{ city.name }}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-gray-700">{{ city.country }}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
-                                                <div class="bg-primary h-2 rounded-full" :style="{width: city.greenIndex + '%'}"></div>
-                                            </div>
-                                            <span class="font-medium">{{ city.greenIndex }}</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-gray-700">{{ city.emissions }}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="w-16 bg-gray-200 rounded-full h-2 mr-2">
-                                                <div class="bg-secondary h-2 rounded-full" :style="{width: city.renewable + '%'}"></div>
-                                            </div>
-                                            <span class="font-medium">{{ city.renewable }}%</span>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-                
-                <!-- Global environmental data interactive map -->
-                <section>
-                    <h3 class="text-xl font-bold text-primary mb-6 flex items-center">
-                        <i class="fas fa-map mr-3"></i>Global Environmental Data Interactive Map 2024
-                    </h3>
-                    
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex flex-wrap gap-4 mb-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Select Data Type</label>
-                                <select v-model="selectedDataType" @change="updateMap" class="rounded-lg border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                                    <option value="emissions">Carbon Emissions</option>
-                                    <option value="renewable">Renewable Energy</option>
-                                    <option value="greenIndex">Green Index</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="rounded-lg overflow-hidden relative map-container">
-                            <!-- Leaflet map container -->
-                            <div id="worldMap">
-                                <!-- Loading state -->
-                                <div v-if="mapState === 'loading'" class="map-loading">
-                                    <div class="spinner"></div>
-                                    <p>Loading map data...</p>
-                                </div>
-                                
-                                <!-- Error state -->
-                                <div v-else-if="mapState === 'error'" class="map-error">
-                                    <i class="fas fa-exclamation-triangle"></i>
-                                    <h3 class="text-xl font-bold mb-2">Map loading failed</h3>
-                                    <p class="mb-4">Unable to load interactive map. Please check your network connection or try again later.</p>
-                                    <button @click="initMap" class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-lg transition duration-200">
-                                        <i class="fas fa-redo mr-2"></i>Reload Map
-                                    </button>
-                                </div>
-                                
-                                <!-- Fallback map -->
-                                <div v-else-if="mapState === 'fallback'" class="fallback-map">
-                                    <div class="fallback-continents">
-                                        <div class="continent" style="width: 30%; height: 40%; top: 15%; left: 15%;"></div>
-                                        <div class="continent" style="width: 25%; height: 35%; top: 20%; left: 60%;"></div>
-                                        <div class="continent" style="width: 35%; height: 30%; top: 50%; left: 20%;"></div>
-                                        <div class="continent" style="width: 20%; height: 25%; top: 60%; left: 70%;"></div>
-                                    </div>
-                                    
-                                    <!-- Fallback markers -->
-                                    <div v-for="point in mapDataPoints" 
-                                         :key="point.name"
-                                         class="fallback-marker"
-                                         :style="{
+
+                    <!-- Fallback markers -->
+                    <div
+                      v-for="point in mapDataPoints"
+                      :key="point.name"
+                      class="fallback-marker"
+                      :style="{
                                              left: getFallbackX(point.lng) + '%',
                                              top: getFallbackY(point.lat) + '%',
                                              backgroundColor: getColorByValue(point[selectedDataType], selectedDataType)
                                          }"
-                                         @mouseover="showTooltip(point, $event)"
-                                         @mouseout="hideTooltip">
-                                    </div>
-                                    
-                                    <!-- Tooltip -->
-                                    <div class="data-tooltip" :class="{ visible: tooltip.visible }" 
-                                         :style="{ left: tooltip.x + 'px', top: tooltip.y + 'px' }">
-                                        <h4 class="font-bold">{{ tooltip.name }}, {{ tooltip.country }}</h4>
-                                        <p>Carbon Emissions: {{ tooltip.emissions }} tons/person</p>
-                                        <p>Renewable Energy: {{ tooltip.renewable }}%</p>
-                                        <p>Green Index: {{ tooltip.greenIndex }}</p>
-                                        <p class="text-xs text-gray-500 mt-1">2024 Data</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Map source selector -->
-                            <div v-if="mapState === 'loaded'" class="map-source-selector">
-                                <label class="block text-xs font-medium text-gray-700 mb-1">Map Source</label>
-                                <select v-model="selectedMapSource" @change="changeMapSource" class="text-xs rounded border-gray-300 shadow-sm focus:border-primary focus:ring-primary">
-                                    <option value="osm">OpenStreetMap</option>
-                                    <option value="carto">CartoDB Light</option>
-                                    <option value="stadia">Stadia Alidade</option>
-                                    <option value="esri">Esri World Imagery</option>
-                                </select>
-                            </div>
-                            
-                            <div class="map-overlay"></div>
-                            
-                            <!-- Map legend -->
-                            <div class="map-legend absolute bottom-4 right-4">
-                                <h4 class="text-sm font-semibold mb-2">{{ getLegendTitle() }}</h4>
-                                <div v-for="item in legendItems" :key="item.label" class="flex items-center mb-1">
-                                    <div class="legend-color" :style="{backgroundColor: item.color}"></div>
-                                    <span class="text-xs">{{ item.label }}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-4 text-sm text-gray-600">
-                            <p v-if="mapState === 'loaded'">Click on map markers to view detailed environmental data for each city in 2024</p>
-                            <p v-else-if="mapState === 'fallback'">Hover over map markers to view detailed environmental data for each city in 2024</p>
-                            <p v-else>Map is currently unavailable. Please try reloading the page.</p>
-                        </div>
+                      @mouseover="showTooltip(point, $event)"
+                      @mouseout="hideTooltip"
+                    ></div>
+
+                    <!-- Tooltip -->
+                    <div
+                      class="data-tooltip"
+                      :class="{ visible: tooltip.visible }"
+                      :style="{ left: tooltip.x + 'px', top: tooltip.y + 'px' }"
+                    >
+                      <h4 class="font-bold">
+                        {{ tooltip.name }}, {{ tooltip.country }}
+                      </h4>
+                      <p>
+                        Carbon Emissions: {{ tooltip.emissions }} tons/person
+                      </p>
+                      <p>Renewable Energy: {{ tooltip.renewable }}%</p>
+                      <p>Green Index: {{ tooltip.greenIndex }}</p>
+                      <p class="text-xs text-gray-500 mt-1">2024 Data</p>
                     </div>
-                </section>
+                  </div>
+                </div>
+
+                <!-- Map source selector -->
+                <div v-if="mapState === 'loaded'" class="map-source-selector">
+                  <label class="block text-xs font-medium text-gray-700 mb-1"
+                    >Map Source</label
+                  >
+                  <select
+                    v-model="selectedMapSource"
+                    @change="changeMapSource"
+                    class="text-xs rounded border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                  >
+                    <option value="osm">OpenStreetMap</option>
+                    <option value="carto">CartoDB Light</option>
+                    <option value="stadia">Stadia Alidade</option>
+                    <option value="esri">Esri World Imagery</option>
+                  </select>
+                </div>
+
+                <div class="map-overlay"></div>
+
+                <!-- Map legend -->
+                <div class="map-legend absolute bottom-4 right-4">
+                  <h4 class="text-sm font-semibold mb-2">
+                    {{ getLegendTitle() }}
+                  </h4>
+                  <div
+                    v-for="item in legendItems"
+                    :key="item.label"
+                    class="flex items-center mb-1"
+                  >
+                    <div
+                      class="legend-color"
+                      :style="{backgroundColor: item.color}"
+                    ></div>
+                    <span class="text-xs">{{ item.label }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 text-sm text-gray-600">
+                <p v-if="mapState === 'loaded'">
+                  Click on map markers to view detailed environmental data for
+                  each city in 2024
+                </p>
+                <p v-else-if="mapState === 'fallback'">
+                  Hover over map markers to view detailed environmental data for
+                  each city in 2024
+                </p>
+                <p v-else>
+                  Map is currently unavailable. Please try reloading the page.
+                </p>
+              </div>
             </div>
+          </section>
         </div>
+      </div>
     </main>
 
     <!-- Footer -->
@@ -562,33 +705,37 @@
               <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
             </h3>
             <p class="text-gray-300 mb-4">
-              GoGreen Hub is a platform dedicated to promoting the concepts of sustainable development and green technology innovation. We help the public, businesses, and governments better understand and participate in environmental action by providing the latest news, scientific knowledge, and case studies.
-            </p >
+              GoGreen Hub is a platform dedicated to promoting the concepts of
+              sustainable development and green technology innovation. We help
+              the public, businesses, and governments better understand and
+              participate in environmental action by providing the latest news,
+              scientific knowledge, and case studies.
+            </p>
             <div class="flex space-x-4">
               <a
                 href=" "
                 class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
               >
                 <i class="fab fa-weibo"></i>
-              </a >
+              </a>
               <a
                 href="#"
                 class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
               >
                 <i class="fab fa-weixin"></i>
-              </a >
+              </a>
               <a
                 href="#"
                 class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
               >
                 <i class="fab fa-twitter"></i>
-              </a >
+              </a>
               <a
                 href="#"
                 class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
               >
                 <i class="fab fa-linkedin"></i>
-              </a >
+              </a>
             </div>
           </div>
 
@@ -644,7 +791,7 @@
             <ul class="space-y-3 text-gray-300">
               <li class="flex items-center">
                 <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
-                <span>Hubei University, Wuhan 430074, China</span>
+                <span>Hubei University, Wuhan 430062, China</span>
               </li>
               <li class="flex items-center">
                 <i class="fas fa-phone mr-3 text-accent"></i>
@@ -665,206 +812,519 @@
     </footer>
 
     <script>
-        const { createApp, ref, onMounted, computed, watch } = Vue;
-        
-        createApp({
-            setup() {
-                // Reactive data
-                const selectedDataType = ref('emissions');
-                const selectedMapSource = ref('osm');
-                const mapState = ref('loading');
-                const tooltip = ref({
-                    visible: false,
-                    x: 0,
-                    y: 0,
-                    name: '',
-                    country: '',
-                    emissions: 0,
-                    renewable: 0,
-                    greenIndex: 0
+      const { createApp, ref, onMounted, computed, watch } = Vue;
+
+      createApp({
+        setup() {
+          // Reactive data
+          const selectedDataType = ref("emissions");
+          const selectedMapSource = ref("osm");
+          const mapState = ref("loading");
+          const tooltip = ref({
+            visible: false,
+            x: 0,
+            y: 0,
+            name: "",
+            country: "",
+            emissions: 0,
+            renewable: 0,
+            greenIndex: 0,
+          });
+
+          // Map references
+          let worldMap = null;
+          let currentTileLayer = null;
+          let cityMarkers = [];
+
+          // Define multiple map sources
+          const mapSources = {
+            osm: {
+              name: "OpenStreetMap",
+              url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            },
+            carto: {
+              name: "CartoDB Light",
+              url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            },
+            stadia: {
+              name: "Stadia Alidade",
+              url: "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png",
+              attribution:
+                '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+            },
+            esri: {
+              name: "Esri World Imagery",
+              url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+              attribution:
+                "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+            },
+          };
+
+          // City ranking data
+          const cityRankings = ref([
+            {
+              name: "Copenhagen",
+              country: "Denmark",
+              greenIndex: 89.5,
+              emissions: 1.8,
+              renewable: 85,
+              lat: 55.6761,
+              lng: 12.5683,
+            },
+            {
+              name: "Stockholm",
+              country: "Sweden",
+              greenIndex: 88.2,
+              emissions: 2.0,
+              renewable: 82,
+              lat: 59.3293,
+              lng: 18.0686,
+            },
+            {
+              name: "Oslo",
+              country: "Norway",
+              greenIndex: 87.8,
+              emissions: 2.1,
+              renewable: 99,
+              lat: 59.9139,
+              lng: 10.7522,
+            },
+            {
+              name: "Helsinki",
+              country: "Finland",
+              greenIndex: 86.3,
+              emissions: 2.3,
+              renewable: 55,
+              lat: 60.1699,
+              lng: 24.9384,
+            },
+            {
+              name: "Amsterdam",
+              country: "Netherlands",
+              greenIndex: 85.7,
+              emissions: 2.5,
+              renewable: 35,
+              lat: 52.3676,
+              lng: 4.9041,
+            },
+            {
+              name: "Berlin",
+              country: "Germany",
+              greenIndex: 84.2,
+              emissions: 2.8,
+              renewable: 52,
+              lat: 52.52,
+              lng: 13.405,
+            },
+            {
+              name: "Vancouver",
+              country: "Canada",
+              greenIndex: 83.9,
+              emissions: 2.7,
+              renewable: 95,
+              lat: 49.2827,
+              lng: -123.1207,
+            },
+            {
+              name: "Singapore",
+              country: "Singapore",
+              greenIndex: 82.1,
+              emissions: 3.5,
+              renewable: 8,
+              lat: 1.3521,
+              lng: 103.8198,
+            },
+            {
+              name: "Tokyo",
+              country: "Japan",
+              greenIndex: 81.3,
+              emissions: 3.8,
+              renewable: 25,
+              lat: 35.6762,
+              lng: 139.6503,
+            },
+            {
+              name: "Seoul",
+              country: "South Korea",
+              greenIndex: 80.5,
+              emissions: 4.2,
+              renewable: 12,
+              lat: 37.5665,
+              lng: 126.978,
+            },
+          ]);
+
+          // Map data points
+          const mapDataPoints = ref([
+            // Asia
+            {
+              name: "Beijing",
+              country: "China",
+              lat: 39.9042,
+              lng: 116.4074,
+              emissions: 7.8,
+              renewable: 18,
+              greenIndex: 72,
+            },
+            {
+              name: "Tokyo",
+              country: "Japan",
+              lat: 35.6762,
+              lng: 139.6503,
+              emissions: 6.8,
+              renewable: 25,
+              greenIndex: 81.3,
+            },
+            {
+              name: "New Delhi",
+              country: "India",
+              lat: 28.6139,
+              lng: 77.209,
+              emissions: 8.5,
+              renewable: 12,
+              greenIndex: 58,
+            },
+            {
+              name: "Singapore",
+              country: "Singapore",
+              lat: 1.3521,
+              lng: 103.8198,
+              emissions: 3.5,
+              renewable: 8,
+              greenIndex: 82.1,
+            },
+            {
+              name: "Seoul",
+              country: "South Korea",
+              lat: 37.5665,
+              lng: 126.978,
+              emissions: 4.2,
+              renewable: 12,
+              greenIndex: 80.5,
+            },
+            {
+              name: "Bangkok",
+              country: "Thailand",
+              lat: 13.7563,
+              lng: 100.5018,
+              emissions: 6.2,
+              renewable: 20,
+              greenIndex: 68,
+            },
+
+            // Europe
+            {
+              name: "London",
+              country: "UK",
+              lat: 51.5074,
+              lng: -0.1278,
+              emissions: 4.2,
+              renewable: 42,
+              greenIndex: 82,
+            },
+            {
+              name: "Paris",
+              country: "France",
+              lat: 48.8566,
+              lng: 2.3522,
+              emissions: 2.8,
+              renewable: 32,
+              greenIndex: 80,
+            },
+            {
+              name: "Berlin",
+              country: "Germany",
+              lat: 52.52,
+              lng: 13.405,
+              emissions: 2.8,
+              renewable: 52,
+              greenIndex: 84.2,
+            },
+            {
+              name: "Moscow",
+              country: "Russia",
+              lat: 55.7558,
+              lng: 37.6173,
+              emissions: 5.8,
+              renewable: 8,
+              greenIndex: 62,
+            },
+            {
+              name: "Rome",
+              country: "Italy",
+              lat: 41.9028,
+              lng: 12.4964,
+              emissions: 4.0,
+              renewable: 25,
+              greenIndex: 75,
+            },
+            {
+              name: "Copenhagen",
+              country: "Denmark",
+              lat: 55.6761,
+              lng: 12.5683,
+              emissions: 1.8,
+              renewable: 85,
+              greenIndex: 89.5,
+            },
+            {
+              name: "Oslo",
+              country: "Norway",
+              lat: 59.9139,
+              lng: 10.7522,
+              emissions: 2.1,
+              renewable: 99,
+              greenIndex: 87.8,
+            },
+            {
+              name: "Stockholm",
+              country: "Sweden",
+              lat: 59.3293,
+              lng: 18.0686,
+              emissions: 2.0,
+              renewable: 82,
+              greenIndex: 88.2,
+            },
+            {
+              name: "Helsinki",
+              country: "Finland",
+              lat: 60.1699,
+              lng: 24.9384,
+              emissions: 2.3,
+              renewable: 55,
+              greenIndex: 86.3,
+            },
+            {
+              name: "Amsterdam",
+              country: "Netherlands",
+              lat: 52.3676,
+              lng: 4.9041,
+              emissions: 2.5,
+              renewable: 35,
+              greenIndex: 85.7,
+            },
+
+            // North America
+            {
+              name: "New York",
+              country: "USA",
+              lat: 40.7128,
+              lng: -74.006,
+              emissions: 6.5,
+              renewable: 25,
+              greenIndex: 78,
+            },
+            {
+              name: "Los Angeles",
+              country: "USA",
+              lat: 34.0522,
+              lng: -118.2437,
+              emissions: 5.8,
+              renewable: 28,
+              greenIndex: 76,
+            },
+            {
+              name: "Vancouver",
+              country: "Canada",
+              lat: 49.2827,
+              lng: -123.1207,
+              emissions: 2.7,
+              renewable: 95,
+              greenIndex: 83.9,
+            },
+            {
+              name: "Mexico City",
+              country: "Mexico",
+              lat: 19.4326,
+              lng: -99.1332,
+              emissions: 5.2,
+              renewable: 30,
+              greenIndex: 70,
+            },
+
+            // South America
+            {
+              name: "São Paulo",
+              country: "Brazil",
+              lat: -23.5505,
+              lng: -46.6333,
+              emissions: 4.5,
+              renewable: 52,
+              greenIndex: 73,
+            },
+            {
+              name: "Buenos Aires",
+              country: "Argentina",
+              lat: -34.6037,
+              lng: -58.3816,
+              emissions: 4.2,
+              renewable: 35,
+              greenIndex: 76,
+            },
+
+            // Oceania
+            {
+              name: "Sydney",
+              country: "Australia",
+              lat: -33.8688,
+              lng: 151.2093,
+              emissions: 5.2,
+              renewable: 28,
+              greenIndex: 79,
+            },
+            {
+              name: "Auckland",
+              country: "New Zealand",
+              lat: -36.8485,
+              lng: 174.7633,
+              emissions: 3.8,
+              renewable: 45,
+              greenIndex: 82,
+            },
+
+            // Africa
+            {
+              name: "Cairo",
+              country: "Egypt",
+              lat: 30.0444,
+              lng: 31.2357,
+              emissions: 6.2,
+              renewable: 18,
+              greenIndex: 60,
+            },
+            {
+              name: "Nairobi",
+              country: "Kenya",
+              lat: -1.2921,
+              lng: 36.8219,
+              emissions: 3.0,
+              renewable: 42,
+              greenIndex: 72,
+            },
+            {
+              name: "Lagos",
+              country: "Nigeria",
+              lat: 6.5244,
+              lng: 3.3792,
+              emissions: 6.8,
+              renewable: 15,
+              greenIndex: 55,
+            },
+            {
+              name: "Johannesburg",
+              country: "South Africa",
+              lat: -26.2041,
+              lng: 28.0473,
+              emissions: 5.8,
+              renewable: 22,
+              greenIndex: 65,
+            },
+          ]);
+
+          // Computed properties
+          const legendItems = computed(() => {
+            if (selectedDataType.value === "emissions") {
+              return [
+                { color: "#1a9850", label: "Low (< 3 tons/person)" },
+                { color: "#91cf60", label: "Medium Low (3-5 tons/person)" },
+                { color: "#d9ef8b", label: "Medium (5-7 tons/person)" },
+                { color: "#fee08b", label: "Medium High (7-9 tons/person)" },
+                { color: "#fc8d59", label: "High (> 9 tons/person)" },
+              ];
+            } else if (selectedDataType.value === "renewable") {
+              return [
+                { color: "#fc8d59", label: "Low (< 15%)" },
+                { color: "#fee08b", label: "Medium Low (15-35%)" },
+                { color: "#d9ef8b", label: "Medium (35-55%)" },
+                { color: "#91cf60", label: "Medium High (55-75%)" },
+                { color: "#1a9850", label: "High (> 75%)" },
+              ];
+            } else {
+              return [
+                { color: "#fc8d59", label: "Low (< 65)" },
+                { color: "#fee08b", label: "Medium Low (65-75)" },
+                { color: "#d9ef8b", label: "Medium (75-80)" },
+                { color: "#91cf60", label: "Medium High (80-85)" },
+                { color: "#1a9850", label: "High (> 85)" },
+              ];
+            }
+          });
+
+          // Methods
+          const getRankingClass = (rank) => {
+            if (rank === 1) return "bg-yellow-100 text-yellow-800";
+            if (rank === 2) return "bg-gray-100 text-gray-800";
+            if (rank === 3) return "bg-orange-100 text-orange-800";
+            return "bg-blue-100 text-blue-800";
+          };
+
+          const getLegendTitle = () => {
+            if (selectedDataType.value === "emissions")
+              return "Carbon Emissions (tons/person) 2024";
+            if (selectedDataType.value === "renewable")
+              return "Renewable Energy Share (%) 2024";
+            return "Green Index 2024";
+          };
+
+          const getColorByValue = (value, type) => {
+            if (type === "emissions") {
+              if (value < 3) return "#1a9850";
+              if (value < 5) return "#91cf60";
+              if (value < 7) return "#d9ef8b";
+              if (value < 9) return "#fee08b";
+              return "#fc8d59";
+            } else if (type === "renewable") {
+              if (value < 15) return "#fc8d59";
+              if (value < 35) return "#fee08b";
+              if (value < 55) return "#d9ef8b";
+              if (value < 75) return "#91cf60";
+              return "#1a9850";
+            } else {
+              if (value < 65) return "#fc8d59";
+              if (value < 75) return "#fee08b";
+              if (value < 80) return "#d9ef8b";
+              if (value < 85) return "#91cf60";
+              return "#1a9850";
+            }
+          };
+
+          const getFallbackX = (lng) => {
+            return ((lng + 180) / 360) * 100;
+          };
+
+          const getFallbackY = (lat) => {
+            return ((90 - lat) / 180) * 100;
+          };
+
+          const updateMap = () => {
+            if (worldMap && mapState.value === "loaded") {
+              // Clear existing markers
+              cityMarkers.forEach((marker) => {
+                worldMap.removeLayer(marker);
+              });
+              cityMarkers = [];
+
+              // Add updated color markers
+              mapDataPoints.value.forEach((point) => {
+                const color = getColorByValue(
+                  point[selectedDataType.value],
+                  selectedDataType.value
+                );
+
+                const customIcon = L.divIcon({
+                  className: "custom-marker",
+                  html: `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>`,
+                  iconSize: [16, 16],
+                  iconAnchor: [8, 8],
                 });
-                
-                // Map references
-                let worldMap = null;
-                let currentTileLayer = null;
-                let cityMarkers = [];
-                
-                // Define multiple map sources
-                const mapSources = {
-                    osm: {
-                        name: 'OpenStreetMap',
-                        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    },
-                    carto: {
-                        name: 'CartoDB Light',
-                        url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                    },
-                    stadia: {
-                        name: 'Stadia Alidade',
-                        url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
-                        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-                    },
-                    esri: {
-                        name: 'Esri World Imagery',
-                        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-                    }
-                };
-                
-                // City ranking data
-                const cityRankings = ref([
-                    { name: 'Copenhagen', country: 'Denmark', greenIndex: 89.5, emissions: 1.8, renewable: 85, lat: 55.6761, lng: 12.5683 },
-                    { name: 'Stockholm', country: 'Sweden', greenIndex: 88.2, emissions: 2.0, renewable: 82, lat: 59.3293, lng: 18.0686 },
-                    { name: 'Oslo', country: 'Norway', greenIndex: 87.8, emissions: 2.1, renewable: 99, lat: 59.9139, lng: 10.7522 },
-                    { name: 'Helsinki', country: 'Finland', greenIndex: 86.3, emissions: 2.3, renewable: 55, lat: 60.1699, lng: 24.9384 },
-                    { name: 'Amsterdam', country: 'Netherlands', greenIndex: 85.7, emissions: 2.5, renewable: 35, lat: 52.3676, lng: 4.9041 },
-                    { name: 'Berlin', country: 'Germany', greenIndex: 84.2, emissions: 2.8, renewable: 52, lat: 52.5200, lng: 13.4050 },
-                    { name: 'Vancouver', country: 'Canada', greenIndex: 83.9, emissions: 2.7, renewable: 95, lat: 49.2827, lng: -123.1207 },
-                    { name: 'Singapore', country: 'Singapore', greenIndex: 82.1, emissions: 3.5, renewable: 8, lat: 1.3521, lng: 103.8198 },
-                    { name: 'Tokyo', country: 'Japan', greenIndex: 81.3, emissions: 3.8, renewable: 25, lat: 35.6762, lng: 139.6503 },
-                    { name: 'Seoul', country: 'South Korea', greenIndex: 80.5, emissions: 4.2, renewable: 12, lat: 37.5665, lng: 126.9780 }
-                ]);
-                
-                // Map data points
-                const mapDataPoints = ref([
-                    // Asia
-                    { name: 'Beijing', country: 'China', lat: 39.9042, lng: 116.4074, emissions: 7.8, renewable: 18, greenIndex: 72 },
-                    { name: 'Tokyo', country: 'Japan', lat: 35.6762, lng: 139.6503, emissions: 6.8, renewable: 25, greenIndex: 81.3 },
-                    { name: 'New Delhi', country: 'India', lat: 28.6139, lng: 77.2090, emissions: 8.5, renewable: 12, greenIndex: 58 },
-                    { name: 'Singapore', country: 'Singapore', lat: 1.3521, lng: 103.8198, emissions: 3.5, renewable: 8, greenIndex: 82.1 },
-                    { name: 'Seoul', country: 'South Korea', lat: 37.5665, lng: 126.9780, emissions: 4.2, renewable: 12, greenIndex: 80.5 },
-                    { name: 'Bangkok', country: 'Thailand', lat: 13.7563, lng: 100.5018, emissions: 6.2, renewable: 20, greenIndex: 68 },
-                    
-                    // Europe
-                    { name: 'London', country: 'UK', lat: 51.5074, lng: -0.1278, emissions: 4.2, renewable: 42, greenIndex: 82 },
-                    { name: 'Paris', country: 'France', lat: 48.8566, lng: 2.3522, emissions: 2.8, renewable: 32, greenIndex: 80 },
-                    { name: 'Berlin', country: 'Germany', lat: 52.5200, lng: 13.4050, emissions: 2.8, renewable: 52, greenIndex: 84.2 },
-                    { name: 'Moscow', country: 'Russia', lat: 55.7558, lng: 37.6173, emissions: 5.8, renewable: 8, greenIndex: 62 },
-                    { name: 'Rome', country: 'Italy', lat: 41.9028, lng: 12.4964, emissions: 4.0, renewable: 25, greenIndex: 75 },
-                    { name: 'Copenhagen', country: 'Denmark', lat: 55.6761, lng: 12.5683, emissions: 1.8, renewable: 85, greenIndex: 89.5 },
-                    { name: 'Oslo', country: 'Norway', lat: 59.9139, lng: 10.7522, emissions: 2.1, renewable: 99, greenIndex: 87.8 },
-                    { name: 'Stockholm', country: 'Sweden', lat: 59.3293, lng: 18.0686, emissions: 2.0, renewable: 82, greenIndex: 88.2 },
-                    { name: 'Helsinki', country: 'Finland', lat: 60.1699, lng: 24.9384, emissions: 2.3, renewable: 55, greenIndex: 86.3 },
-                    { name: 'Amsterdam', country: 'Netherlands', lat: 52.3676, lng: 4.9041, emissions: 2.5, renewable: 35, greenIndex: 85.7 },
-                    
-                    // North America
-                    { name: 'New York', country: 'USA', lat: 40.7128, lng: -74.0060, emissions: 6.5, renewable: 25, greenIndex: 78 },
-                    { name: 'Los Angeles', country: 'USA', lat: 34.0522, lng: -118.2437, emissions: 5.8, renewable: 28, greenIndex: 76 },
-                    { name: 'Vancouver', country: 'Canada', lat: 49.2827, lng: -123.1207, emissions: 2.7, renewable: 95, greenIndex: 83.9 },
-                    { name: 'Mexico City', country: 'Mexico', lat: 19.4326, lng: -99.1332, emissions: 5.2, renewable: 30, greenIndex: 70 },
-                    
-                    // South America
-                    { name: 'São Paulo', country: 'Brazil', lat: -23.5505, lng: -46.6333, emissions: 4.5, renewable: 52, greenIndex: 73 },
-                    { name: 'Buenos Aires', country: 'Argentina', lat: -34.6037, lng: -58.3816, emissions: 4.2, renewable: 35, greenIndex: 76 },
-                    
-                    // Oceania
-                    { name: 'Sydney', country: 'Australia', lat: -33.8688, lng: 151.2093, emissions: 5.2, renewable: 28, greenIndex: 79 },
-                    { name: 'Auckland', country: 'New Zealand', lat: -36.8485, lng: 174.7633, emissions: 3.8, renewable: 45, greenIndex: 82 },
-                    
-                    // Africa
-                    { name: 'Cairo', country: 'Egypt', lat: 30.0444, lng: 31.2357, emissions: 6.2, renewable: 18, greenIndex: 60 },
-                    { name: 'Nairobi', country: 'Kenya', lat: -1.2921, lng: 36.8219, emissions: 3.0, renewable: 42, greenIndex: 72 },
-                    { name: 'Lagos', country: 'Nigeria', lat: 6.5244, lng: 3.3792, emissions: 6.8, renewable: 15, greenIndex: 55 },
-                    { name: 'Johannesburg', country: 'South Africa', lat: -26.2041, lng: 28.0473, emissions: 5.8, renewable: 22, greenIndex: 65 }
-                ]);
-                
-                // Computed properties
-                const legendItems = computed(() => {
-                    if (selectedDataType.value === 'emissions') {
-                        return [
-                            { color: '#1a9850', label: 'Low (< 3 tons/person)' },
-                            { color: '#91cf60', label: 'Medium Low (3-5 tons/person)' },
-                            { color: '#d9ef8b', label: 'Medium (5-7 tons/person)' },
-                            { color: '#fee08b', label: 'Medium High (7-9 tons/person)' },
-                            { color: '#fc8d59', label: 'High (> 9 tons/person)' }
-                        ];
-                    } else if (selectedDataType.value === 'renewable') {
-                        return [
-                            { color: '#fc8d59', label: 'Low (< 15%)' },
-                            { color: '#fee08b', label: 'Medium Low (15-35%)' },
-                            { color: '#d9ef8b', label: 'Medium (35-55%)' },
-                            { color: '#91cf60', label: 'Medium High (55-75%)' },
-                            { color: '#1a9850', label: 'High (> 75%)' }
-                        ];
-                    } else {
-                        return [
-                            { color: '#fc8d59', label: 'Low (< 65)' },
-                            { color: '#fee08b', label: 'Medium Low (65-75)' },
-                            { color: '#d9ef8b', label: 'Medium (75-80)' },
-                            { color: '#91cf60', label: 'Medium High (80-85)' },
-                            { color: '#1a9850', label: 'High (> 85)' }
-                        ];
-                    }
-                });
-                
-                // Methods
-                const getRankingClass = (rank) => {
-                    if (rank === 1) return 'bg-yellow-100 text-yellow-800';
-                    if (rank === 2) return 'bg-gray-100 text-gray-800';
-                    if (rank === 3) return 'bg-orange-100 text-orange-800';
-                    return 'bg-blue-100 text-blue-800';
-                };
-                
-                const getLegendTitle = () => {
-                    if (selectedDataType.value === 'emissions') return 'Carbon Emissions (tons/person) 2024';
-                    if (selectedDataType.value === 'renewable') return 'Renewable Energy Share (%) 2024';
-                    return 'Green Index 2024';
-                };
-                
-                const getColorByValue = (value, type) => {
-                    if (type === 'emissions') {
-                        if (value < 3) return '#1a9850';
-                        if (value < 5) return '#91cf60';
-                        if (value < 7) return '#d9ef8b';
-                        if (value < 9) return '#fee08b';
-                        return '#fc8d59';
-                    } else if (type === 'renewable') {
-                        if (value < 15) return '#fc8d59';
-                        if (value < 35) return '#fee08b';
-                        if (value < 55) return '#d9ef8b';
-                        if (value < 75) return '#91cf60';
-                        return '#1a9850';
-                    } else {
-                        if (value < 65) return '#fc8d59';
-                        if (value < 75) return '#fee08b';
-                        if (value < 80) return '#d9ef8b';
-                        if (value < 85) return '#91cf60';
-                        return '#1a9850';
-                    }
-                };
-                
-                const getFallbackX = (lng) => {
-                    return ((lng + 180) / 360) * 100;
-                };
-                
-                const getFallbackY = (lat) => {
-                    return ((90 - lat) / 180) * 100;
-                };
-                
-                const updateMap = () => {
-                    if (worldMap && mapState.value === 'loaded') {
-                        // Clear existing markers
-                        cityMarkers.forEach(marker => {
-                            worldMap.removeLayer(marker);
-                        });
-                        cityMarkers = [];
-                        
-                        // Add updated color markers
-                        mapDataPoints.value.forEach(point => {
-                            const color = getColorByValue(point[selectedDataType.value], selectedDataType.value);
-                            
-                            const customIcon = L.divIcon({
-                                className: 'custom-marker',
-                                html: `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>`,
-                                iconSize: [16, 16],
-                                iconAnchor: [8, 8]
-                            });
-                            
-                            const marker = L.marker([point.lat, point.lng], { icon: customIcon })
-                                .addTo(worldMap)
-                                .bindPopup(`
+
+                const marker = L.marker([point.lat, point.lng], {
+                  icon: customIcon,
+                }).addTo(worldMap).bindPopup(`
                                     <div class="custom-popup">
                                         <h4 class="font-bold">${point.name}, ${point.country}</h4>
                                         <p>Carbon Emissions: ${point.emissions} tons/person</p>
@@ -873,235 +1333,265 @@
                                         <p class="text-xs text-gray-500 mt-1">2024 Data</p>
                                     </div>
                                 `);
-                            
-                            cityMarkers.push(marker);
-                        });
-                    }
-                };
-                
-                const changeMapSource = () => {
-                    if (worldMap && mapState.value === 'loaded') {
-                        // Remove current tile layer
-                        if (currentTileLayer) {
-                            worldMap.removeLayer(currentTileLayer);
-                        }
-                        
-                        // Add new tile layer
-                        const source = mapSources[selectedMapSource.value];
-                        currentTileLayer = L.tileLayer(source.url, {
-                            attribution: source.attribution,
-                            maxZoom: 18
-                        }).addTo(worldMap);
-                    }
-                };
-                
-                const showTooltip = (point, event) => {
-                    const rect = event.target.getBoundingClientRect();
-                    tooltip.value = {
-                        visible: true,
-                        x: event.clientX + 10,
-                        y: event.clientY - 50,
-                        name: point.name,
-                        country: point.country,
-                        emissions: point.emissions,
-                        renewable: point.renewable,
-                        greenIndex: point.greenIndex
-                    };
-                };
-                
-                const hideTooltip = () => {
-                    tooltip.value.visible = false;
-                };
-                
-                // Initialize Leaflet map
-                const initMap = () => {
-                    mapState.value = 'loading';
-                    
-                    if (typeof L === 'undefined') {
-                        console.error('Leaflet library failed to load');
-                        mapState.value = 'fallback';
-                        return;
-                    }
-                    
-                    try {
-                        // Create map
-                        worldMap = L.map('worldMap').setView([20, 0], 2);
-                        
-                        // Try multiple map sources in order
-                        const tryMapSource = (sources, index = 0) => {
-                            if (index >= sources.length) {
-                                // All sources failed, use fallback
-                                mapState.value = 'fallback';
-                                return;
-                            }
-                            
-                            const sourceKey = sources[index];
-                            const source = mapSources[sourceKey];
-                            
-                            console.log(`Trying map source: ${source.name}`);
-                            
-                            const tileLayer = L.tileLayer(source.url, {
-                                attribution: source.attribution,
-                                maxZoom: 18
-                            }).addTo(worldMap);
-                            
-                            currentTileLayer = tileLayer;
-                            selectedMapSource.value = sourceKey;
-                            
-                            // Set error handling
-                            tileLayer.on('tileerror', function(error) {
-                                console.warn(`Failed to load tiles from ${source.name}, trying next source`);
-                                worldMap.removeLayer(tileLayer);
-                                tryMapSource(sources, index + 1);
-                            });
-                            
-                            // Set success handling
-                            worldMap.whenReady(function() {
-                                console.log(`Successfully loaded map from ${source.name}`);
-                                mapState.value = 'loaded';
-                                updateMap();
-                            });
-                            
-                            // Set timeout for this source
-                            setTimeout(() => {
-                                if (mapState.value === 'loading') {
-                                    console.warn(`Timeout loading ${source.name}, trying next source`);
-                                    worldMap.removeLayer(tileLayer);
-                                    tryMapSource(sources, index + 1);
-                                }
-                            }, 3000);
-                        };
-                        
-                        // Try sources in order of reliability
-                        const sourceOrder = ['osm', 'carto', 'stadia', 'esri'];
-                        tryMapSource(sourceOrder);
-                        
-                    } catch (error) {
-                        console.error('Error initializing map:', error);
-                        mapState.value = 'fallback';
-                    }
-                };
-                
-                // Initialize charts
-                const initCharts = () => {
-                    // Carbon emissions chart
-                    const emissionsCtx = document.getElementById('emissionsChart').getContext('2d');
-                    new Chart(emissionsCtx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['China', 'USA', 'India', 'Russia', 'Japan', 'Germany', 'South Korea', 'Iran', 'Saudi Arabia', 'Canada'],
-                            datasets: [{
-                                label: 'Carbon Emissions (Million Tons)',
-                                data: [11200, 4850, 2980, 1820, 1080, 680, 620, 580, 550, 520],
-                                backgroundColor: 'rgba(46, 125, 50, 0.7)',
-                                borderColor: 'rgba(46, 125, 50, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Carbon Emissions (Million Tons)'
-                                    }
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Top 10 Countries by Carbon Emissions 2024'
-                                }
-                            }
-                        }
-                    });
-                    
-                    // Renewable energy chart
-                    const renewableCtx = document.getElementById('renewableChart').getContext('2d');
-                    new Chart(renewableCtx, {
-                        type: 'line',
-                        data: {
-                            labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024'],
-                            datasets: [
-                                {
-                                    label: 'Solar',
-                                    data: [8.2, 10.5, 13.8, 18.2, 22.5, 28.3, 34.2],
-                                    borderColor: 'rgba(255, 193, 7, 1)',
-                                    backgroundColor: 'rgba(255, 193, 7, 0.1)',
-                                    tension: 0.3,
-                                    fill: true
-                                },
-                                {
-                                    label: 'Wind',
-                                    data: [12.3, 14.8, 16.5, 18.9, 21.4, 24.2, 27.8],
-                                    borderColor: 'rgba(139, 195, 74, 1)',
-                                    backgroundColor: 'rgba(139, 195, 74, 0.1)',
-                                    tension: 0.3,
-                                    fill: true
-                                }
-                            ]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    title: {
-                                        display: true,
-                                        text: 'Generation Share (%)'
-                                    }
-                                }
-                            }
-                        }
-                    });
-                };
-                
-                // Lifecycle
-                onMounted(() => {
-                    initCharts();
-                    initMap();
-                });
-                
-                // Watch for data type changes
-                watch(selectedDataType, () => {
-                    if (worldMap && mapState.value === 'loaded') {
-                        updateMap();
-                    }
-                });
-                
-                return {
-                    selectedDataType,
-                    selectedMapSource,
-                    cityRankings,
-                    mapDataPoints,
-                    legendItems,
-                    mapState,
-                    tooltip,
-                    getRankingClass,
-                    getLegendTitle,
-                    updateMap,
-                    changeMapSource,
-                    initMap,
-                    getColorByValue,
-                    getFallbackX,
-                    getFallbackY,
-                    showTooltip,
-                    hideTooltip
-                };
-            }
-        }).mount('#app');
 
-        function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-        }
+                cityMarkers.push(marker);
+              });
+            }
+          };
+
+          const changeMapSource = () => {
+            if (worldMap && mapState.value === "loaded") {
+              // Remove current tile layer
+              if (currentTileLayer) {
+                worldMap.removeLayer(currentTileLayer);
+              }
+
+              // Add new tile layer
+              const source = mapSources[selectedMapSource.value];
+              currentTileLayer = L.tileLayer(source.url, {
+                attribution: source.attribution,
+                maxZoom: 18,
+              }).addTo(worldMap);
+            }
+          };
+
+          const showTooltip = (point, event) => {
+            const rect = event.target.getBoundingClientRect();
+            tooltip.value = {
+              visible: true,
+              x: event.clientX + 10,
+              y: event.clientY - 50,
+              name: point.name,
+              country: point.country,
+              emissions: point.emissions,
+              renewable: point.renewable,
+              greenIndex: point.greenIndex,
+            };
+          };
+
+          const hideTooltip = () => {
+            tooltip.value.visible = false;
+          };
+
+          // Initialize Leaflet map
+          const initMap = () => {
+            mapState.value = "loading";
+
+            if (typeof L === "undefined") {
+              console.error("Leaflet library failed to load");
+              mapState.value = "fallback";
+              return;
+            }
+
+            try {
+              // Create map
+              worldMap = L.map("worldMap").setView([20, 0], 2);
+
+              // Try multiple map sources in order
+              const tryMapSource = (sources, index = 0) => {
+                if (index >= sources.length) {
+                  // All sources failed, use fallback
+                  mapState.value = "fallback";
+                  return;
+                }
+
+                const sourceKey = sources[index];
+                const source = mapSources[sourceKey];
+
+                console.log(`Trying map source: ${source.name}`);
+
+                const tileLayer = L.tileLayer(source.url, {
+                  attribution: source.attribution,
+                  maxZoom: 18,
+                }).addTo(worldMap);
+
+                currentTileLayer = tileLayer;
+                selectedMapSource.value = sourceKey;
+
+                // Set error handling
+                tileLayer.on("tileerror", function (error) {
+                  console.warn(
+                    `Failed to load tiles from ${source.name}, trying next source`
+                  );
+                  worldMap.removeLayer(tileLayer);
+                  tryMapSource(sources, index + 1);
+                });
+
+                // Set success handling
+                worldMap.whenReady(function () {
+                  console.log(`Successfully loaded map from ${source.name}`);
+                  mapState.value = "loaded";
+                  updateMap();
+                });
+
+                // Set timeout for this source
+                setTimeout(() => {
+                  if (mapState.value === "loading") {
+                    console.warn(
+                      `Timeout loading ${source.name}, trying next source`
+                    );
+                    worldMap.removeLayer(tileLayer);
+                    tryMapSource(sources, index + 1);
+                  }
+                }, 3000);
+              };
+
+              // Try sources in order of reliability
+              const sourceOrder = ["osm", "carto", "stadia", "esri"];
+              tryMapSource(sourceOrder);
+            } catch (error) {
+              console.error("Error initializing map:", error);
+              mapState.value = "fallback";
+            }
+          };
+
+          // Initialize charts
+          const initCharts = () => {
+            // Carbon emissions chart
+            const emissionsCtx = document
+              .getElementById("emissionsChart")
+              .getContext("2d");
+            new Chart(emissionsCtx, {
+              type: "bar",
+              data: {
+                labels: [
+                  "China",
+                  "USA",
+                  "India",
+                  "Russia",
+                  "Japan",
+                  "Germany",
+                  "South Korea",
+                  "Iran",
+                  "Saudi Arabia",
+                  "Canada",
+                ],
+                datasets: [
+                  {
+                    label: "Carbon Emissions (Million Tons)",
+                    data: [
+                      11200, 4850, 2980, 1820, 1080, 680, 620, 580, 550, 520,
+                    ],
+                    backgroundColor: "rgba(46, 125, 50, 0.7)",
+                    borderColor: "rgba(46, 125, 50, 1)",
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: "Carbon Emissions (Million Tons)",
+                    },
+                  },
+                },
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                  title: {
+                    display: true,
+                    text: "Top 10 Countries by Carbon Emissions 2024",
+                  },
+                },
+              },
+            });
+
+            // Renewable energy chart
+            const renewableCtx = document
+              .getElementById("renewableChart")
+              .getContext("2d");
+            new Chart(renewableCtx, {
+              type: "line",
+              data: {
+                labels: [
+                  "2018",
+                  "2019",
+                  "2020",
+                  "2021",
+                  "2022",
+                  "2023",
+                  "2024",
+                ],
+                datasets: [
+                  {
+                    label: "Solar",
+                    data: [8.2, 10.5, 13.8, 18.2, 22.5, 28.3, 34.2],
+                    borderColor: "rgba(255, 193, 7, 1)",
+                    backgroundColor: "rgba(255, 193, 7, 0.1)",
+                    tension: 0.3,
+                    fill: true,
+                  },
+                  {
+                    label: "Wind",
+                    data: [12.3, 14.8, 16.5, 18.9, 21.4, 24.2, 27.8],
+                    borderColor: "rgba(139, 195, 74, 1)",
+                    backgroundColor: "rgba(139, 195, 74, 0.1)",
+                    tension: 0.3,
+                    fill: true,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    title: {
+                      display: true,
+                      text: "Generation Share (%)",
+                    },
+                  },
+                },
+              },
+            });
+          };
+
+          // Lifecycle
+          onMounted(() => {
+            initCharts();
+            initMap();
+          });
+
+          // Watch for data type changes
+          watch(selectedDataType, () => {
+            if (worldMap && mapState.value === "loaded") {
+              updateMap();
+            }
+          });
+
+          return {
+            selectedDataType,
+            selectedMapSource,
+            cityRankings,
+            mapDataPoints,
+            legendItems,
+            mapState,
+            tooltip,
+            getRankingClass,
+            getLegendTitle,
+            updateMap,
+            changeMapSource,
+            initMap,
+            getColorByValue,
+            getFallbackX,
+            getFallbackY,
+            showTooltip,
+            hideTooltip,
+          };
+        },
+      }).mount("#app");
+
+      function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("hidden");
+      }
     </script>
-</body>
+  </body>
 </html>
