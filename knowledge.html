@@ -1,353 +1,705 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>绿色科技知识库 - 绿色未来</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Green Technology Knowledge Base - GoGreen Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            DEFAULT: '#2e7d32',
-                            light: '#4caf50',
-                            dark: '#1b5e20'
-                        },
-                        secondary: '#8bc34a',
-                        accent: '#ffc107',
-                        light: '#f5f9f5'
-                    }
-                }
-            }
-        }
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                DEFAULT: "#2e7d32",
+                light: "#4caf50",
+                dark: "#1b5e20",
+              },
+              secondary: "#8bc34a",
+              accent: "#ffc107",
+              light: "#f5f9f5",
+            },
+          },
+        },
+      };
     </script>
     <style>
-        .page-transition {
-            animation: fadeIn 0.5s ease-in;
+      .page-transition {
+        animation: fadeIn 0.5s ease-in;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
     </style>
-</head>
-<body class="bg-light text-gray-800">
-    <!-- 导航栏 -->
+  </head>
+  <body class="bg-light text-gray-800">
+    <!-- navigation bar -->
     <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-leaf text-2xl text-primary"></i>
-                <span class="text-xl font-bold text-primary">绿色未来</span>
-            </div>
-            
-            <!-- 桌面导航 -->
-            <ul class="hidden md:flex space-x-6">
-                <li><a href="index.html" class="font-medium transition-colors text-gray-700 hover:text-primary">首页</a></li>
-                <li><a href="news.html" class="font-medium transition-colors text-gray-700 hover:text-primary">新闻与趋势</a></li>
-                <li><a href="knowledge.html" class="font-medium transition-colors text-primary border-b-2 border-primary">绿色科技知识库</a></li>
-                <li><a href="projects.html" class="font-medium transition-colors text-gray-700 hover:text-primary">项目与案例</a></li>
-                <li><a href="data.html" class="font-medium transition-colors text-gray-700 hover:text-primary">数据与可视化</a></li>
-                <li><a href="#footer" class="font-medium transition-colors text-gray-700 hover:text-primary">关于我们</a></li>
-            </ul>
-            
-            <!-- 移动端菜单按钮 -->
-            <button onclick="toggleMenu()" class="md:hidden text-gray-700">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </nav>
-        
-        <!-- 移动端导航菜单 -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
-            <ul class="py-2">
-                <li><a href="index.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">首页</a></li>
-                <li><a href="news.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">新闻与趋势</a></li>
-                <li><a href="knowledge.html" class="block px-4 py-2 font-medium text-primary bg-light">绿色科技知识库</a></li>
-                <li><a href="projects.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">项目与案例</a></li>
-                <li><a href="data.html" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">数据与可视化</a></li>
-                <li><a href="#footer" class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary">关于我们</a></li>
-            </ul>
+      <nav
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i class="fas fa-leaf text-2xl text-primary"></i>
+          <span class="text-xl font-bold text-primary">GoGreen Hub</span>
         </div>
+
+        <!-- desktop navigation -->
+        <ul class="hidden md:flex space-x-6">
+          <li>
+            <a
+              href="index.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="news.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >News</a
+            >
+          </li>
+          <li>
+            <a
+              href="knowledge.html"
+              class="font-medium transition-colors text-primary border-b-2 border-primary"
+              >Knowledge Base</a
+            >
+          </li>
+          <li>
+            <a
+              href="projects.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >Cases</a
+            >
+          </li>
+          <li>
+            <a
+              href="data.html"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >Data</a>
+          </li>
+          <li>
+            <a
+              href="#footer"
+              class="font-medium transition-colors text-gray-700 hover:text-primary"
+              >About</a
+            >
+          </li>
+        </ul>
+
+        <!-- mobile menu button -->
+        <button onclick="toggleMenu()" class="md:hidden text-gray-700">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </nav>
+
+      <!-- mobile navigation menu -->
+      <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
+        <ul class="py-2">
+          <li>
+            <a
+              href="index.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="news.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >News & Trends</a
+            >
+          </li>
+          <li>
+            <a
+              href="knowledge.html"
+              class="block px-4 py-2 font-medium text-primary bg-light"
+              >Green Technology Knowledge Base</a
+            >
+          </li>
+          <li>
+            <aw
+              href="projects.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >Projects & Case Studies</a
+            >
+          </li>
+          <li>
+            <a
+              href="data.html"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >Data & Visualization</a
+            >
+          </li>
+          <li>
+            <a
+              href="#footer"
+              class="block px-4 py-2 font-medium text-gray-700 hover:bg-light hover:text-primary"
+              >About Us</a
+            >
+          </li>
+        </ul>
+      </div>
     </header>
 
-    <!-- 主要内容区 -->
+    <!-- Main Content Area -->
     <main class="min-h-screen page-transition">
-        <div class="container mx-auto px-4 py-8">
-            <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
-                绿色科技知识库
-                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
-            </h2>
-            
-            <!-- 知识卡片 -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-solar-panel text-3xl text-primary mr-4"></i>
-                        <h3 class="text-xl font-bold text-primary">可再生能源</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">深入了解太阳能、风能、水能等清洁能源技术，掌握可再生能源的开发利用方法和未来发展趋势。</p>
-                    <button onclick="showKnowledgeDetail('renewable')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                        了解更多
-                    </button>
-                </div>
+      <div class="container mx-auto px-4 py-8">
+        <h2
+          class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 pb-3 relative"
+        >
+          Green Technology Knowledge Base
+          <span
+            class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"
+          ></span>
+        </h2>
 
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-recycle text-3xl text-primary mr-4"></i>
-                        <h3 class="text-xl font-bold text-primary">循环经济</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">学习资源循环利用理念，探索废物减量化、再利用和资源化的创新模式，推动经济可持续发展。</p>
-                    <button onclick="showKnowledgeDetail('circular')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                        了解更多
-                    </button>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-leaf text-3xl text-primary mr-4"></i>
-                        <h3 class="text-xl font-bold text-primary">碳中和技术</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">了解碳捕捉、碳封存、碳交易等关键技术，掌握企业和个人实现碳中和的路径和方法。</p>
-                    <button onclick="showKnowledgeDetail('carbon')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                        了解更多
-                    </button>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-building text-3xl text-primary mr-4"></i>
-                        <h3 class="text-xl font-bold text-primary">绿色建筑</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">探索节能建筑设计、绿色建材应用、智能建筑管理等技术，创建健康舒适的绿色生活空间。</p>
-                    <button onclick="showKnowledgeDetail('building')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                        了解更多
-                    </button>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-car text-3xl text-primary mr-4"></i>
-                        <h3 class="text-xl font-bold text-primary">绿色交通</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">了解电动汽车、氢能交通、共享出行等绿色交通解决方案，助力交通运输行业低碳转型。</p>
-                    <button onclick="showKnowledgeDetail('transport')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                        了解更多
-                    </button>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-tree text-3xl text-primary mr-4"></i>
-                        <h3 class="text-xl font-bold text-primary">生态保护</h3>
-                    </div>
-                    <p class="text-gray-600 mb-4">学习生物多样性保护、生态修复、自然资源管理等知识，共同守护地球家园。</p>
-                    <button onclick="showKnowledgeDetail('ecology')" class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors w-full">
-                        了解更多
-                    </button>
-                </div>
+        <!-- Knowledge Card -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg bg-cover bg-center"
+            style="
+              background-image: linear-gradient(
+                  rgba(255, 255, 255, 0.65),
+                  rgba(255, 255, 255, 0.85)
+                ),
+                url('https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            "
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-solar-panel text-3xl text-primary mr-4"></i>
+              <h3 class="text-xl font-bold text-primary">Clean Energy</h3>
             </div>
+            <p class="text-gray-600 mb-4">
+              Clean energy is a crucial pillar for achieving carbon neutrality,
+              encompassing solar, wind, hydro, bioenergy, and geothermal power.
+              Solar energy utilizes photovoltaic (PV) modules to directly
+              convert sunlight into electricity, or employs solar thermal
+              systems to concentrate heat for power generation. It has become
+              one of the fastest-growing energy types globally. Wind energy
+              converts the kinetic energy of air into electricity via wind
+              turbines. Innovations like offshore wind farms and smart turbine
+              technology are continuously boosting its efficiency. These
+              renewable energy sources are progressively replacing fossil fuels,
+              laying the foundation for a zero-carbon energy system.
+            </p>
+          </div>
 
-            <!-- 知识测试 -->
-            <h2 class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 relative">
-                知识测试
-                <span class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"></span>
-            </h2>
-
-            <div id="quiz-1" class="bg-white rounded-xl shadow-md p-6 mb-6">
-                <div class="mb-4">
-                    <h3 class="text-xl font-bold text-primary">1. 以下哪种能源属于可再生能源?</h3>
-                </div>
-                <div class="grid gap-3 mb-4">
-                    <div onclick="selectAnswer(1, 0)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        A. 煤炭
-                    </div>
-                    <div onclick="selectAnswer(1, 1)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        B. 石油
-                    </div>
-                    <div onclick="selectAnswer(1, 2)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        C. 太阳能
-                    </div>
-                    <div onclick="selectAnswer(1, 3)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        D. 天然气
-                    </div>
-                </div>
-                <button onclick="submitAnswer(1, 2)" class="bg-accent text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors w-full">
-                    提交答案
-                </button>
-                <div id="result-1" class="mt-4 hidden"></div>
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg bg-cover bg-center"
+            style="
+              background-image: linear-gradient(
+                  rgba(255, 255, 255, 0.65),
+                  rgba(255, 255, 255, 0.85)
+                ),
+                url('https://images.unsplash.com/photo-1593941707882-a5bba14938c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            "
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-battery-full text-3xl text-primary mr-4"></i>
+              <h3 class="text-xl font-bold text-primary">
+                Energy Storage & Electrification
+              </h3>
             </div>
+            <p class="text-gray-600 mb-4">
+              Energy storage technology is a crucial link for ensuring the
+              stable supply of clean energy. Electric vehicles (EVs) use
+              high-energy-density batteries to power motors, significantly
+              reducing carbon emissions in the transport sector. China currently
+              leads the world in both the number of EVs in operation and its
+              charging infrastructure. At the same time, the recycling of used
+              batteries presents a new green challenge. Lithium batteries
+              contain critical metals like nickel, cobalt, and lithium, which
+              can be circulated back into the economy through recycling and
+              reuse. The future goal is to establish a "full life-cycle green
+              battery system," making energy use more efficient and sustainable.
+            </p>
+          </div>
 
-            <div id="quiz-2" class="bg-white rounded-xl shadow-md p-6 mb-6">
-                <div class="mb-4">
-                    <h3 class="text-xl font-bold text-primary">2. 循环经济的3R原则是指?</h3>
-                </div>
-                <div class="grid gap-3 mb-4">
-                    <div onclick="selectAnswer(2, 0)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        A. 减量化、再利用、资源化
-                    </div>
-                    <div onclick="selectAnswer(2, 1)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        B. 回收、重组、再生
-                    </div>
-                    <div onclick="selectAnswer(2, 2)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        C. 节约、环保、创新
-                    </div>
-                    <div onclick="selectAnswer(2, 3)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        D. 降低、复用、循环
-                    </div>
-                </div>
-                <button onclick="submitAnswer(2, 0)" class="bg-accent text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors w-full">
-                    提交答案
-                </button>
-                <div id="result-2" class="mt-4 hidden"></div>
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg bg-cover bg-center"
+            style="
+              background-image: linear-gradient(
+                  rgba(255, 255, 255, 0.65),
+                  rgba(255, 255, 255, 0.85)
+                ),
+                url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            "
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-seedling text-3xl text-primary mr-4"></i>
+              <h3 class="text-xl font-bold text-primary">
+                Intelligent Agriculture
+              </h3>
             </div>
+            <p class="text-gray-600 mb-4">
+              Smart agriculture utilizes information technology and intelligent
+              equipment to enhance agricultural efficiency and ecological
+              benefits. Drones perform precise spraying, seeding, and pest and
+              disease monitoring, thereby reducing the use of chemical products.
+              Vertical farms use artificial lighting, nutrient solutions, and
+              climate control to enable year-round cultivation within urban
+              areas. The integration of the Internet of Things (IoT) and Big
+              Data monitoring makes agricultural production more scientific,
+              efficient, and energy-saving, establishing it as a key direction
+              for future food security and sustainable development.
+            </p>
+          </div>
 
-            <div id="quiz-3" class="bg-white rounded-xl shadow-md p-6 mb-6">
-                <div class="mb-4">
-                    <h3 class="text-xl font-bold text-primary">3. 碳中和是指?</h3>
-                </div>
-                <div class="grid gap-3 mb-4">
-                    <div onclick="selectAnswer(3, 0)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        A. 完全不排放二氧化碳
-                    </div>
-                    <div onclick="selectAnswer(3, 1)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        B. 碳排放量与碳吸收量相等，实现净零排放
-                    </div>
-                    <div onclick="selectAnswer(3, 2)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        C. 减少50%的碳排放
-                    </div>
-                    <div onclick="selectAnswer(3, 3)" class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200">
-                        D. 使用清洁能源替代化石能源
-                    </div>
-                </div>
-                <button onclick="submitAnswer(3, 1)" class="bg-accent text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors w-full">
-                    提交答案
-                </button>
-                <div id="result-3" class="mt-4 hidden"></div>
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg bg-cover bg-center"
+            style="
+              background-image: linear-gradient(
+                  rgba(255, 255, 255, 0.65),
+                  rgba(255, 255, 255, 0.85)
+                ),
+                url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            "
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-building text-3xl text-primary mr-4"></i>
+              <h3 class="text-xl font-bold text-primary">Smart City</h3>
             </div>
+            <p class="text-gray-600 mb-4">
+              Smart cities represent the seamless integration of technology and
+              sustainability. By combining smart grids, IoT systems, and
+              artificial intelligence, they optimize energy distribution,
+              transportation, and waste management. Smart grids balance
+              renewable and traditional energy sources efficiently, while
+              AI-powered waste systems automate sorting and recycling to
+              minimize pollution. Data-driven infrastructure and sensors further
+              enhance resource utilization, reduce carbon emissions, and improve
+              residents' quality of life—making cities not only more efficient
+              and connected but also greener and smarter for the future.
+            </p>
+          </div>
+
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg bg-cover bg-center"
+            style="
+              background-image: linear-gradient(
+                  rgba(255, 255, 255, 0.65),
+                  rgba(255, 255, 255, 0.85)
+                ),
+                url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            "
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-cogs text-3xl text-primary mr-4"></i>
+              <h3 class="text-xl font-bold text-primary">
+                Green Manufacturing
+              </h3>
+            </div>
+            <p class="text-gray-600 mb-4">
+              Green manufacturing emphasizes reducing energy consumption and
+              environmental pollution within industrial production. The circular
+              economy model ensures resources continue to flow through the value
+              chain via strategies like reuse, remanufacturing, and recycling.
+              "Zero-emission factories" achieve near-zero pollution output by
+              implementing energy consumption monitoring, exhaust gas recovery,
+              and water resource recirculation. A growing number of enterprises
+              are adopting green supply chains and smart manufacturing
+              technologies, driving the transformation of Chinese industry
+              toward a sustainable, high-value-added future.
+            </p>
+          </div>
+
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg bg-cover bg-center"
+            style="
+              background-image: linear-gradient(
+                  rgba(255, 255, 255, 0.65),
+                  rgba(255, 255, 255, 0.85)
+                ),
+                url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            "
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-home text-3xl text-primary mr-4"></i>
+              <h3 class="text-xl font-bold text-primary">Green Living</h3>
+            </div>
+            <p class="text-gray-600 mb-4">
+              Green living begins with intentional individual action, promoting
+              energy conservation, emission reduction, and responsible
+              low-carbon consumption. Smart home systems can automatically
+              regulate lighting, temperature, and appliance usage with
+              precision, leading to significant reductions in overall energy
+              consumption. "Carbon footprint" tools help citizens vividly
+              understand their complete environmental impact across travel,
+              diet, and daily shopping habits. Through low-carbon commuting,
+              energy-efficient electricity use, and waste sorting, every person
+              can contribute to a sustainable future. Technology makes
+              environmental protection smarter and easier to achieve.
+            </p>
+          </div>
+
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg bg-cover bg-center"
+            style="
+              background-image: linear-gradient(
+                  rgba(255, 255, 255, 0.75),
+                  rgba(255, 255, 255, 0.85)
+                ),
+                url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            "
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-tree text-3xl text-primary mr-4"></i>
+              <h3 class="text-xl font-bold text-primary">
+                Environmental Protection
+              </h3>
+            </div>
+            <p class="text-gray-600 mb-4">
+              One of the key technologies for environmental protection is Carbon
+              Capture, Utilization, and Storage (CCUS). This technology captures
+              carbon dioxide from industrial emissions and then either stores it
+              deep underground or converts it into valuable reusable products
+              like fuels and building materials. In high-emission sectors such
+              as steel, cement, and thermal power, CCUS can significantly reduce
+              carbon output, making it a critical tool for achieving "negative
+              carbon emissions." It is rapidly becoming a major breakthrough
+              area for Chinese energy transition and green innovation efforts.
+            </p>
+          </div>
+
+          <div
+            class="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg bg-cover bg-center"
+            style="
+              background-image: linear-gradient(
+                  rgba(255, 255, 255, 0.65),
+                  rgba(255, 255, 255, 0.85)
+                ),
+                url('https://images.unsplash.com/photo-1555255707-c07966088b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            "
+          >
+            <div class="flex items-center mb-4">
+              <i class="fas fa-lightbulb text-3xl text-primary mr-4"></i>
+              <h3 class="text-xl font-bold text-primary">
+                Frontier Innovation
+              </h3>
+            </div>
+            <p class="text-gray-600 mb-4">
+              Artificial Intelligence (AI) is rapidly becoming a core driver of
+              green technology. Artificial intelligence can predict energy
+              demand, optimize power grid operation, identify pollution sources,
+              and support ecological monitoring. In the monitoring of forests,
+              oceans, and the atmosphere, AI combined with satellite and sensor
+              technology can detect environmental anomalies in real-time.
+              Furthermore, machine learning is accelerating the research and
+              development of new materials, aiding breakthroughs in
+              high-efficiency photovoltaics, batteries, and carbon capture
+              technologies. AI makes green innovation smarter and more
+              efficient.
+            </p>
+          </div>
         </div>
+
+        <!-- Knowledge Test -->
+        <h2
+          class="text-2xl md:text-3xl font-bold text-center text-primary mb-12 pb-3 relative"
+        >
+          知识测试
+          <span
+            class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-primary mt-2"
+          ></span>
+        </h2>
+
+        <div id="quiz-1" class="bg-white rounded-xl shadow-md p-6 mb-6">
+          <div class="mb-4">
+            <h3 class="text-xl font-bold text-primary">
+              1. 以下哪种能源属于可再生能源?
+            </h3>
+          </div>
+          <div class="grid gap-3 mb-4">
+            <div
+              onclick="selectAnswer(1, 0)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              A. 煤炭
+            </div>
+            <div
+              onclick="selectAnswer(1, 1)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              B. 石油
+            </div>
+            <div
+              onclick="selectAnswer(1, 2)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              C. 太阳能
+            </div>
+            <div
+              onclick="selectAnswer(1, 3)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              D. 天然气
+            </div>
+          </div>
+          <button
+            onclick="submitAnswer(1, 2)"
+            class="bg-accent text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors w-full"
+          >
+            提交答案
+          </button>
+          <div id="result-1" class="mt-4 hidden"></div>
+        </div>
+
+        <div id="quiz-2" class="bg-white rounded-xl shadow-md p-6 mb-6">
+          <div class="mb-4">
+            <h3 class="text-xl font-bold text-primary">
+              2. 循环经济的3R原则是指?
+            </h3>
+          </div>
+          <div class="grid gap-3 mb-4">
+            <div
+              onclick="selectAnswer(2, 0)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              A. 减量化、再利用、资源化
+            </div>
+            <div
+              onclick="selectAnswer(2, 1)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              B. 回收、重组、再生
+            </div>
+            <div
+              onclick="selectAnswer(2, 2)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              C. 节约、环保、创新
+            </div>
+            <div
+              onclick="selectAnswer(2, 3)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              D. 降低、复用、循环
+            </div>
+          </div>
+          <button
+            onclick="submitAnswer(2, 0)"
+            class="bg-accent text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors w-full"
+          >
+            提交答案
+          </button>
+          <div id="result-2" class="mt-4 hidden"></div>
+        </div>
+
+        <div id="quiz-3" class="bg-white rounded-xl shadow-md p-6 mb-6">
+          <div class="mb-4">
+            <h3 class="text-xl font-bold text-primary">3. 碳中和是指?</h3>
+          </div>
+          <div class="grid gap-3 mb-4">
+            <div
+              onclick="selectAnswer(3, 0)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              A. 完全不排放二氧化碳
+            </div>
+            <div
+              onclick="selectAnswer(3, 1)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              B. 碳排放量与碳吸收量相等，实现净零排放
+            </div>
+            <div
+              onclick="selectAnswer(3, 2)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              C. 减少50%的碳排放
+            </div>
+            <div
+              onclick="selectAnswer(3, 3)"
+              class="quiz-option p-3 rounded-lg cursor-pointer transition-colors bg-gray-100 hover:bg-gray-200"
+            >
+              D. 使用清洁能源替代化石能源
+            </div>
+          </div>
+          <button
+            onclick="submitAnswer(3, 1)"
+            class="bg-accent text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-yellow-500 transition-colors w-full"
+          >
+            提交答案
+          </button>
+          <div id="result-3" class="mt-4 hidden"></div>
+        </div>
+      </div>
     </main>
 
-    <!-- 页脚 -->
+    <!-- Footer -->
     <footer id="footer" class="bg-primary-dark text-white pt-12 pb-6 mt-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        关于我们
-                        <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
-                    </h3>
-                    <p class="text-gray-300 mb-4">
-                        绿色未来是一个致力于推广可持续发展理念和绿色科技创新的平台。我们通过提供最新资讯、知识科普和案例分析，帮助公众、企业和政府更好地理解和参与环保行动。
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-weibo"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-weixin"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        快速链接
-                        <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
-                    </h3>
-                    <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-accent transition-colors">首页</a></li>
-                        <li><a href="news.html" class="text-gray-300 hover:text-accent transition-colors">新闻与趋势</a></li>
-                        <li><a href="knowledge.html" class="text-gray-300 hover:text-accent transition-colors">绿色科技知识库</a></li>
-                        <li><a href="projects.html" class="text-gray-300 hover:text-accent transition-colors">项目与案例</a></li>
-                        <li><a href="data.html" class="text-gray-300 hover:text-accent transition-colors">数据与可视化</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-4 relative pb-2">
-                        联系我们
-                        <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
-                    </h3>
-                    <ul class="space-y-3 text-gray-300">
-                        <li class="flex items-center">
-                            <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
-                            <span>北京市朝阳区绿色科技园区</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-phone mr-3 text-accent"></i>
-                            <span>400-123-4567</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-3 text-accent"></i>
-                            <span>contact@greenfuture.org</span>
-                        </li>
-                        <li class="flex items-center">
-                            <i class="fas fa-clock mr-3 text-accent"></i>
-                            <span>周一至周五 9:00-18:00</span>
-                        </li>
-                    </ul>
-                </div>
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4 relative pb-2">
+              About Us
+              <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+            </h3>
+            <p class="text-gray-300 mb-4">
+              GoGreen Hub is a platform dedicated to promoting the concepts of sustainable development and green technology innovation. We help the public, businesses, and governments better understand and participate in environmental action by providing the latest news, scientific knowledge, and case studies.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-weibo"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-weixin"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-accent transition-colors"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a>
             </div>
-            
-            <div class="pt-6 border-t border-gray-700 text-center text-gray-400">
-                <p>&copy; 2023 绿色未来 - 可持续发展平台. 保留所有权利.</p>
-            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-4 relative pb-2">
+              Quick Links
+              <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+            </h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="index.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="news.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >News & Trends</a
+                >
+              </li>
+              <li>
+                <a
+                  href="knowledge.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Green Technology Knowledge Base</a
+                >
+              </li>
+              <li>
+                <a
+                  href="projects.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Projects & Case Studies</a
+                >
+              </li>
+              <li>
+                <a
+                  href="data.html"
+                  class="text-gray-300 hover:text-accent transition-colors"
+                  >Data & Visualization</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-4 relative pb-2">
+              Contact Us
+              <span class="absolute bottom-0 left-0 w-10 h-1 bg-accent"></span>
+            </h3>
+            <ul class="space-y-3 text-gray-300">
+              <li class="flex items-center">
+                <i class="fas fa-map-marker-alt mr-3 text-accent"></i>
+                <span>Hubei University, Wuhan 430074, China</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-phone mr-3 text-accent"></i>
+                <span>400-123-4567</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-envelope mr-3 text-accent"></i>
+                <span>contact@gogreenhub.org</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-clock mr-3 text-accent"></i>
+                <span>Monday to Friday 9:00-18:00</span>
+              </li>
+            </ul>
+          </div>
         </div>
+      </div>
     </footer>
 
     <script>
-        let selectedAnswers = {};
+      let selectedAnswers = {};
 
-        function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
+      function toggleMenu() {
+        const menu = document.getElementById("mobileMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      function showKnowledgeDetail(topic) {
+        alert("即将打开" + topic + "知识详情页面");
+      }
+
+      function selectAnswer(quizId, optionIndex) {
+        const quiz = document.getElementById("quiz-" + quizId);
+        const options = quiz.querySelectorAll(".quiz-option");
+
+        options.forEach((opt, idx) => {
+          opt.classList.remove("bg-primary", "text-white");
+          opt.classList.add("bg-gray-100");
+          if (idx === optionIndex) {
+            opt.classList.remove("bg-gray-100");
+            opt.classList.add("bg-primary", "text-white");
+          }
+        });
+
+        selectedAnswers[quizId] = optionIndex;
+      }
+
+      function submitAnswer(quizId, correctAnswer) {
+        const resultDiv = document.getElementById("result-" + quizId);
+        const userAnswer = selectedAnswers[quizId];
+
+        if (userAnswer === undefined) {
+          alert("请先选择一个答案！");
+          return;
         }
 
-        function showKnowledgeDetail(topic) {
-            alert('即将打开' + topic + '知识详情页面');
-        }
+        resultDiv.classList.remove("hidden");
 
-        function selectAnswer(quizId, optionIndex) {
-            const quiz = document.getElementById('quiz-' + quizId);
-            const options = quiz.querySelectorAll('.quiz-option');
-            
-            options.forEach((opt, idx) => {
-                opt.classList.remove('bg-primary', 'text-white');
-                opt.classList.add('bg-gray-100');
-                if (idx === optionIndex) {
-                    opt.classList.remove('bg-gray-100');
-                    opt.classList.add('bg-primary', 'text-white');
-                }
-            });
-            
-            selectedAnswers[quizId] = optionIndex;
+        if (userAnswer === correctAnswer) {
+          resultDiv.innerHTML =
+            '<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded"><strong>正确！</strong> 恭喜你答对了！</div>';
+        } else {
+          resultDiv.innerHTML =
+            '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"><strong>错误！</strong> 正确答案是选项 ' +
+            String.fromCharCode(65 + correctAnswer) +
+            "。请继续学习相关知识。</div>";
         }
-
-        function submitAnswer(quizId, correctAnswer) {
-            const resultDiv = document.getElementById('result-' + quizId);
-            const userAnswer = selectedAnswers[quizId];
-            
-            if (userAnswer === undefined) {
-                alert('请先选择一个答案！');
-                return;
-            }
-            
-            resultDiv.classList.remove('hidden');
-            
-            if (userAnswer === correctAnswer) {
-                resultDiv.innerHTML = '<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded"><strong>正确！</strong> 恭喜你答对了！</div>';
-            } else {
-                resultDiv.innerHTML = '<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"><strong>错误！</strong> 正确答案是选项 ' + String.fromCharCode(65 + correctAnswer) + '。请继续学习相关知识。</div>';
-            }
-        }
+      }
     </script>
-</body>
+  </body>
 </html>
