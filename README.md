@@ -63,7 +63,7 @@ GoGreen Hub is a comprehensive platform dedicated to promoting sustainable livin
 
 ## Technology Stack
 
-- Frontend: HTML5, CSS3, JavaScript
+- Frontend: HTML5, CSS3, tailwind css, JavaScript
 - Data Visualization: Leaflet.js, Chart.js
 - Deployment: GitHub Pages, Netlify
 - Responsive Design: Mobile-friendly interface
